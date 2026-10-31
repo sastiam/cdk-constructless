@@ -2,7 +2,7 @@
 
 ## 1. Bun toolchain
 
-- [ ] 1.1 In `package.json`: set `"packageManager": "bun@1.4.4"`, `"engines": { "node": ">=22" }`; replace `scripts` with exactly:
+- [x] 1.1 In `package.json`: set `"packageManager": "bun@1.4.4"`, `"engines": { "node": ">=22" }`; replace `scripts` with exactly:
   `"build": "tsc -p tsconfig.build.json"`, `"typecheck": "tsc --noEmit -p tsconfig.json"`, `"lint": "biome check ."`,
   `"format": "biome check --write ."`, `"test": "vitest run"`, `"test:integ": "echo 'integration tests arrive in E7' && exit 0"`,
   `"prepare": "tsc -p tsconfig.build.json"` (keeps `github:` installs working: consumers such as aws-foundation install from git and need `lib/` built without Bun).
@@ -13,7 +13,7 @@
   (both must exist before installing, because `bun install` runs the `prepare` script, which compiles with `tsconfig.build.json`).
   Then delete `package-lock.json` and run `bun install` to create `bun.lock`.
   Verify: `bun install --frozen-lockfile` `bun run typecheck` `bun run build`
-- [ ] 1.2 Create `biome.json` with `"$schema": "https://biomejs.dev/schemas/2.6.4/schema.json"`, `files.includes` `["src/**", "test/**", "*.json"]`,
+- [x] 1.2 Create `biome.json` with `"$schema": "https://biomejs.dev/schemas/2.6.4/schema.json"`, `files.includes` `["src/**", "test/**", "*.json"]`,
   formatter `indentStyle: "space"`, `indentWidth: 2`, `lineWidth: 120`, javascript formatter `quoteStyle: "single"`, linter `recommended: true`.
   Run `bun run format` once so existing files comply.
   Commit `build(deps)`.
