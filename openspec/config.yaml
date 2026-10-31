@@ -17,3 +17,4 @@ rules:
     - The last task of every "##" section names its Conventional Commit type, e.g. Commit `feat(finops)`.
     - Each task names the exact files, exported symbols, prop names, default values and error messages; nothing is left for the implementer to decide.
     - Tests for a construct live in test/<domain>/<file>.test.ts and use the helpers in test/helpers.
+    - cdk-nag 3 runs as a CDK policy-validation plugin: in tests every synthesis (including Template.fromStack) throws on unacknowledged findings. Acknowledge deliberate findings with suppressNag using the exact finding ids from the validation report (IAM4/IAM5 are per finding: RuleId[FindingId]); a test whose stack keeps findings the construct leaves to the consumer passes { nag: false } to synth with a comment saying why.

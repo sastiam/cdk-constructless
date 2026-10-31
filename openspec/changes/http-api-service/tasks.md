@@ -16,7 +16,7 @@
   `DefaultRouteSettings: { ThrottlingRateLimit: 10, ThrottlingBurstLimit: 20 }`; `rateLimit: 0` throws the exact message; `burstLimit: 6000` throws
   `throttle.burstLimit must be between 1 and 5000, got 6000`; `AccessLogSettings.DestinationArn` is `{ 'Fn::GetAtt': [<log group id>, 'Arn'] }` and
   `JSON.stringify(Format)` contains `$context.requestId`; log group `RetentionInDays: 3`; CORS `AllowOrigins`; exactly one `AWS::ApiGatewayV2::Stage`.
-  Snapshot of the default case. Do not call `expectNoNagErrors` here (an API without routes is not a deployable configuration).
+  Snapshot of the default case. Use `synth(..., { nag: false })` in this file: an API without routes is not a deployable configuration.
   Commit `feat(http-api)`.
   Verify: `bun run test test/http-api/http-api-service.test.ts` `bun run lint`
 

@@ -13,7 +13,7 @@
 - [ ] 1.2 Create `test/static-site/static-site-deployment.test.ts` with `StaticSiteBucket`, `StaticSiteDistribution` and `s3deploy.Source.asset(path.join(__dirname, '../fixtures/site'))`
   covering each scenario in this change's `specs/static-site/spec.md`: `Custom::CDKBucketDeployment` count 1, `Prune: true`, `DistributionPaths: ['/*']`,
   `DistributionId: { Ref: <distribution logical id> }`; `invalidate: false` → both keys absent; empty sources throws; `memoryLimit: 64` throws
-  `memoryLimit must be between 128 and 10240, got 64`. Snapshot via `normalizedTemplate`. Do not call `expectNoNagErrors` (upstream singleton Lambda).
+  `memoryLimit must be between 128 and 10240, got 64`. Snapshot via `normalizedTemplate`. Use `synth(..., { nag: false })` in this file: the upstream singleton Lambda has findings the library cannot acknowledge.
   Commit `feat(static-site)`.
   Verify: `bun run test test/static-site/static-site-deployment.test.ts` `bun run lint`
 

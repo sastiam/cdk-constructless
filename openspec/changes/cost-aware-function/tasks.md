@@ -11,7 +11,7 @@
   the constructor calls `super(scope, id, { ...defaults, ...props, logGroup })` with that log group and then assigns `this.logGroup`. Defaults (applied only when the prop is `undefined`):
   `runtime: lambda.Runtime.NODEJS_24_X`, `architecture: lambda.Architecture.ARM_64`, `memorySize: 256`, `timeout: Duration.seconds(10)`,
   `recursiveLoop: lambda.RecursiveLoop.TERMINATE`, `bundling: { minify: true, sourceMap: true, ...props.bundling }`.
-  After `super`, if `this.role` exists call `suppressNag(this.role, [{ id: 'AwsSolutions-IAM4', reason: 'AWSLambdaBasicExecutionRole only allows writing CloudWatch Logs for this function' }])`.
+  After `super`, if `this.role` exists call `suppressNag(this.role, [{ id: 'AwsSolutions-IAM4[<finding>]', reason: 'AWSLambdaBasicExecutionRole only allows writing CloudWatch Logs for this function' }]) (cdk-nag 3 acknowledges multi-finding rules per finding: run the test once, read every `AwsSolutions-IAM4[...]` id the validation report prints for this construct and pass each one to `suppressNag` with this reason)`.
   TSDoc on the class lists every default and mentions overriding `architecture` for native x86 modules. Export from `src/index.ts`.
   Verify: `bun run typecheck` `bun run lint`
 - [ ] 1.2 Create `test/lambda/cost-aware-function.test.ts` with `entry: path.join(__dirname, '../fixtures/handler.ts')`, one test per scenario in
