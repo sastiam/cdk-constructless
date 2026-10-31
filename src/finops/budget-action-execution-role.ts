@@ -85,6 +85,8 @@ export class BudgetActionExecutionRole extends Construct {
 
   private readonly grantedPolicyArns = new Set<string>();
 
+  private scpPolicyGranted = false;
+
   /**
    * @param scope the parent construct
    * @param id the construct id
@@ -191,6 +193,34 @@ export class BudgetActionExecutionRole extends Construct {
       {
         id: 'AwsSolutions-IAM5[Resource::*]',
         reason: 'IAM attach actions are scoped by iam:PolicyARN',
+      },
+    ]);
+  }
+
+  /**
+   * Grants the role the permissions to attach, detach and describe service control policies. The statement applies to all resources,
+   * because the attach targets (account, OU or root IDs) are only known when the Budget Action runs.
+   *
+   * Suppressions: the statement reports `AwsSolutions-IAM5[Resource::*]` on the role's default policy, which this method acknowledges
+   * with the reason "SCP attach targets are only known at action time". Calling this method again does nothing.
+   */
+  public allowApplyScpPolicy(): void {
+    if (this.scpPolicyGranted) {
+      return;
+    }
+    this.scpPolicyGranted = true;
+
+    this.role.addToPolicy(
+      new iam.PolicyStatement({
+        actions: ['organizations:AttachPolicy', 'organizations:DetachPolicy', 'organizations:DescribePolicy'],
+        resources: ['*'],
+      }),
+    );
+
+    suppressNag(this.role.node.findChild('DefaultPolicy'), [
+      {
+        id: 'AwsSolutions-IAM5[Resource::*]',
+        reason: 'SCP attach targets are only known at action time',
       },
     ]);
   }

@@ -67,6 +67,29 @@ export function assertItemCount(
   }
 }
 
+const IAM_ACTION_PATTERN = /^[a-z0-9-]+:[A-Za-z0-9*]+$/;
+
+/**
+ * Asserts that every entry of an IAM action list looks like `service:Action`, for example `ec2:RunInstances`.
+ *
+ * Each entry is checked separately. An entry that is an unresolved token is skipped, because its value is only known at deploy time.
+ *
+ * @param scope the construct that owns the prop
+ * @param name the prop name used in the error message
+ * @param actions the IAM actions to check
+ * @throws {ConstructValidationError} `${name} entries must look like service:Action, got "${value}"` for the first entry that does not match `/^[a-z0-9-]+:[A-Za-z0-9*]+$/`
+ */
+export function assertIamActions(scope: IConstruct, name: string, actions: readonly string[]): void {
+  for (const action of actions) {
+    if (Token.isUnresolved(action)) {
+      continue;
+    }
+    if (!IAM_ACTION_PATTERN.test(action)) {
+      throw new ConstructValidationError(scope, `${name} entries must look like service:Action, got "${action}"`);
+    }
+  }
+}
+
 // Domain labels exclude '.', so each character has exactly one way to match (linear time, no ReDoS).
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/;
 const EMAIL_MAX_LENGTH = 254;
