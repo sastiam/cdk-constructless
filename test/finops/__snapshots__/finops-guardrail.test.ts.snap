@@ -1,0 +1,464 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FinOpsGuardrail > full guardrail > matches the snapshot and reports no cdk-nag errors 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "GuardrailActionsRole103A1663": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Condition": {
+                "ArnLike": {
+                  "aws:SourceArn": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":budgets::123456789012:budget/*",
+                      ],
+                    ],
+                  },
+                },
+                "StringEquals": {
+                  "aws:SourceAccount": "123456789012",
+                },
+              },
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "budgets.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "GuardrailActionsRoleDefaultPolicy9DCE9464": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "ec2:DescribeInstanceStatus",
+                "ec2:StopInstances",
+              ],
+              "Condition": {
+                "ForAnyValue:StringEquals": {
+                  "aws:CalledVia": [
+                    "ssm.amazonaws.com",
+                  ],
+                },
+              },
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+            {
+              "Action": "ssm:StartAutomationExecution",
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":ssm:*:*:document/AWS-StopEC2Instance",
+                    ],
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":ssm:*:*:automation-execution/*",
+                    ],
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":ssm:*:*:automation-definition/AWS-StopEC2Instance:*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            {
+              "Action": [
+                "iam:AttachRolePolicy",
+                "iam:DetachRolePolicy",
+                "iam:AttachUserPolicy",
+                "iam:DetachUserPolicy",
+                "iam:AttachGroupPolicy",
+                "iam:DetachGroupPolicy",
+              ],
+              "Condition": {
+                "ArnEquals": {
+                  "iam:PolicyARN": {
+                    "Ref": "GuardrailDenyComputeDenyPolicy85011D4E",
+                  },
+                },
+              },
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "GuardrailActionsRoleDefaultPolicy9DCE9464",
+        "Roles": [
+          {
+            "Ref": "GuardrailActionsRole103A1663",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "GuardrailAlertsTopic3A9575D4": {
+      "Type": "AWS::SNS::Topic",
+    },
+    "GuardrailAlertsTopicPolicy2D0AB8A2": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sns:Publish",
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": "false",
+                },
+              },
+              "Effect": "Deny",
+              "Principal": "*",
+              "Resource": {
+                "Ref": "GuardrailAlertsTopic3A9575D4",
+              },
+              "Sid": "AllowPublishThroughSSLOnly",
+            },
+            {
+              "Action": "SNS:Publish",
+              "Condition": {
+                "ArnLike": {
+                  "aws:SourceArn": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":budgets::123456789012:*",
+                      ],
+                    ],
+                  },
+                },
+                "StringEquals": {
+                  "aws:SourceAccount": "123456789012",
+                },
+              },
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "budgets.amazonaws.com",
+              },
+              "Resource": {
+                "Ref": "GuardrailAlertsTopic3A9575D4",
+              },
+              "Sid": "AWSBudgetsSNSPublishingPermissions",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Topics": [
+          {
+            "Ref": "GuardrailAlertsTopic3A9575D4",
+          },
+        ],
+      },
+      "Type": "AWS::SNS::TopicPolicy",
+    },
+    "GuardrailAlertsTopicalertsexamplecom1CE7B6C1": {
+      "Properties": {
+        "Endpoint": "alerts@example.com",
+        "Protocol": "email",
+        "TopicArn": {
+          "Ref": "GuardrailAlertsTopic3A9575D4",
+        },
+      },
+      "Type": "AWS::SNS::Subscription",
+    },
+    "GuardrailAlertsTopicfinopsexamplecom927B14E3": {
+      "Properties": {
+        "Endpoint": "finops@example.com",
+        "Protocol": "email",
+        "TopicArn": {
+          "Ref": "GuardrailAlertsTopic3A9575D4",
+        },
+      },
+      "Type": "AWS::SNS::Subscription",
+    },
+    "GuardrailBillingAlarm6C882F7F": {
+      "Properties": {
+        "AlarmActions": [
+          {
+            "Ref": "GuardrailAlertsTopic3A9575D4",
+          },
+        ],
+        "ComparisonOperator": "GreaterThanThreshold",
+        "Dimensions": [
+          {
+            "Name": "Currency",
+            "Value": "USD",
+          },
+        ],
+        "EvaluationPeriods": 1,
+        "MetricName": "EstimatedCharges",
+        "Namespace": "AWS/Billing",
+        "Period": 21600,
+        "Statistic": "Maximum",
+        "Threshold": 4,
+        "TreatMissingData": "notBreaching",
+      },
+      "Type": "AWS::CloudWatch::Alarm",
+    },
+    "GuardrailBudgetE3E3B4FD": {
+      "Properties": {
+        "Budget": {
+          "BudgetLimit": {
+            "Amount": 5,
+            "Unit": "USD",
+          },
+          "BudgetName": "TestStackGuardrailBudget35423338",
+          "BudgetType": "COST",
+          "TimeUnit": "MONTHLY",
+        },
+        "NotificationsWithSubscribers": [
+          {
+            "Notification": {
+              "ComparisonOperator": "GREATER_THAN",
+              "NotificationType": "ACTUAL",
+              "Threshold": 60,
+              "ThresholdType": "PERCENTAGE",
+            },
+            "Subscribers": [
+              {
+                "Address": {
+                  "Ref": "GuardrailAlertsTopic3A9575D4",
+                },
+                "SubscriptionType": "SNS",
+              },
+            ],
+          },
+          {
+            "Notification": {
+              "ComparisonOperator": "GREATER_THAN",
+              "NotificationType": "ACTUAL",
+              "Threshold": 80,
+              "ThresholdType": "PERCENTAGE",
+            },
+            "Subscribers": [
+              {
+                "Address": {
+                  "Ref": "GuardrailAlertsTopic3A9575D4",
+                },
+                "SubscriptionType": "SNS",
+              },
+            ],
+          },
+          {
+            "Notification": {
+              "ComparisonOperator": "GREATER_THAN",
+              "NotificationType": "ACTUAL",
+              "Threshold": 100,
+              "ThresholdType": "PERCENTAGE",
+            },
+            "Subscribers": [
+              {
+                "Address": {
+                  "Ref": "GuardrailAlertsTopic3A9575D4",
+                },
+                "SubscriptionType": "SNS",
+              },
+            ],
+          },
+          {
+            "Notification": {
+              "ComparisonOperator": "GREATER_THAN",
+              "NotificationType": "FORECASTED",
+              "Threshold": 100,
+              "ThresholdType": "PERCENTAGE",
+            },
+            "Subscribers": [
+              {
+                "Address": {
+                  "Ref": "GuardrailAlertsTopic3A9575D4",
+                },
+                "SubscriptionType": "SNS",
+              },
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::Budgets::Budget",
+    },
+    "GuardrailDenyComputeAction1088E866": {
+      "DependsOn": [
+        "GuardrailBudgetE3E3B4FD",
+      ],
+      "Properties": {
+        "ActionThreshold": {
+          "Type": "PERCENTAGE",
+          "Value": 100,
+        },
+        "ActionType": "APPLY_IAM_POLICY",
+        "ApprovalModel": "AUTOMATIC",
+        "BudgetName": "TestStackGuardrailBudget35423338",
+        "Definition": {
+          "IamActionDefinition": {
+            "PolicyArn": {
+              "Ref": "GuardrailDenyComputeDenyPolicy85011D4E",
+            },
+            "Roles": [
+              "LabRole",
+            ],
+          },
+        },
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
+            "GuardrailActionsRole103A1663",
+            "Arn",
+          ],
+        },
+        "NotificationType": "ACTUAL",
+        "Subscribers": [
+          {
+            "Address": "alerts@example.com",
+            "Type": "EMAIL",
+          },
+          {
+            "Address": "finops@example.com",
+            "Type": "EMAIL",
+          },
+        ],
+      },
+      "Type": "AWS::Budgets::BudgetsAction",
+    },
+    "GuardrailDenyComputeDenyPolicy85011D4E": {
+      "Properties": {
+        "Description": "",
+        "Path": "/",
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "ec2:RunInstances",
+                "ec2:StartInstances",
+                "lambda:CreateFunction",
+                "ecs:CreateService",
+                "ecs:RunTask",
+                "rds:CreateDBInstance",
+                "rds:StartDBInstance",
+              ],
+              "Effect": "Deny",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::ManagedPolicy",
+    },
+    "GuardrailStopInstancesAction2AC36132": {
+      "DependsOn": [
+        "GuardrailBudgetE3E3B4FD",
+      ],
+      "Properties": {
+        "ActionThreshold": {
+          "Type": "PERCENTAGE",
+          "Value": 80,
+        },
+        "ActionType": "RUN_SSM_DOCUMENTS",
+        "ApprovalModel": "AUTOMATIC",
+        "BudgetName": "TestStackGuardrailBudget35423338",
+        "Definition": {
+          "SsmActionDefinition": {
+            "InstanceIds": [
+              "i-0123456789abcdef0",
+            ],
+            "Region": "us-east-1",
+            "Subtype": "STOP_EC2_INSTANCES",
+          },
+        },
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
+            "GuardrailActionsRole103A1663",
+            "Arn",
+          ],
+        },
+        "NotificationType": "ACTUAL",
+        "Subscribers": [
+          {
+            "Address": "alerts@example.com",
+            "Type": "EMAIL",
+          },
+          {
+            "Address": "finops@example.com",
+            "Type": "EMAIL",
+          },
+        ],
+      },
+      "Type": "AWS::Budgets::BudgetsAction",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
