@@ -19,7 +19,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 Create `docs/constructs/BillingAlarm.md` from `docs/constructs/_template.md`, filling every mandatory section (prerequisite: enable billing alerts; us-east-1 only; backup to Budgets, not a replacement).
+- [x] 2.1 Create `docs/constructs/BillingAlarm.md` from `docs/constructs/_template.md`, filling every mandatory section (prerequisite: enable billing alerts; us-east-1 only; backup to Budgets, not a replacement).
   Append these rows to `docs/aws-facts.md` (when a row with the same fact already exists, only add the construct to its Used by cell):
   `| Billing metric data is stored in us-east-1, represents worldwide charges, is USD only; recommended statistic Maximum with a 6-hour period | https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html | 2026-10-31 | BillingAlarm |`;
   `| CloudWatch free tier includes 10 standard-resolution alarm metrics per month | https://aws.amazon.com/cloudwatch/pricing/ | 2026-10-31 | BillingAlarm |`.
