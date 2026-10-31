@@ -13,7 +13,7 @@
   statement B action `ssm:StartAutomationExecution` on `arn:${partition}:ssm:*:*:document/<DOC>`,
   `arn:${partition}:ssm:*:*:automation-execution/*`, `arn:${partition}:ssm:*:*:automation-definition/<DOC>:*`,
   with `<DOC>` = `AWS-StopEC2Instance` for EC2 and `AWS-StopRdsInstance` for RDS.
-  After the first call, `suppressNag(this.role.node.findChild('DefaultPolicy'), [{ id: 'AwsSolutions-IAM5', reason: 'Budget Actions stop instances through SSM automation documents; AWS documents these wildcard resources' }])`
+  After the first call, `suppressNag(this.role.node.findChild('DefaultPolicy'), [{ id: 'AwsSolutions-IAM5[<finding>]', reason: 'Budget Actions stop instances through SSM automation documents; AWS documents these wildcard resources' }]) (cdk-nag 3 acknowledges multi-finding rules per finding: run the test once, read every `AwsSolutions-IAM5[...]` id the validation report prints for this construct and pass each one to `suppressNag` with this reason)`
   (`suppressNag` resolves the policy's `defaultChild`). Document the suppression in the class TSDoc. Export from `src/index.ts`.
   Verify: `bun run typecheck` `bun run lint`
 - [ ] 1.2 Create `test/finops/budget-action-execution-role.test.ts` covering every scenario in `specs/budget-actions/spec.md`:

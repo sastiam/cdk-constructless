@@ -10,7 +10,7 @@
 - [ ] 1.2 Create `test/http-api/http-api-lambda-routes.test.ts` with a `CostAwareFunction` (entry `test/fixtures/handler.ts`) covering each scenario in this change's
   `specs/http-api/spec.md`: exact `RouteKey`, integration `IntegrationType: 'AWS_PROXY'`, `PayloadFormatVersion: '2.0'`, permission `Principal: 'apigateway.amazonaws.com'`
   and `SourceArn` (use `Match.objectLike` on the `Fn::Join` and assert the last literal segment ends with `/*/*/items/{id}`); paths `items` and `/a b` throw;
-  public route warning present; with `new HttpIamAuthorizer()` (from `aws-cdk-lib/aws-apigatewayv2-authorizers`) `AuthorizationType: 'AWS_IAM'`, no warning,
+  public route warning present (that test uses `synth(..., { nag: false })` because `AwsSolutions-APIG4` flags the unauthorized route on purpose); with `new HttpIamAuthorizer()` (from `aws-cdk-lib/aws-apigatewayv2-authorizers`) `AuthorizationType: 'AWS_IAM'`, no warning,
   snapshot, and `expectNoNagErrors(stack)`.
   Commit `feat(http-api)`.
   Verify: `bun run test test/http-api` `bun run lint`
