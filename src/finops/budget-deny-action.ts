@@ -1,8 +1,8 @@
-import { Token } from 'aws-cdk-lib';
 import * as budgets from 'aws-cdk-lib/aws-budgets';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import { Construct } from 'constructs';
 import { ConstructValidationError } from '../core/errors';
+import { assertIamActions } from '../core/validation';
 import {
   BudgetActionApprovalModel,
   type BudgetActionSubscriber,
@@ -174,14 +174,7 @@ export class BudgetDenyAction extends Construct {
     if (roles.length + users.length + groups.length === 0) {
       throw new ConstructValidationError(this, 'BudgetDenyAction needs at least one role, user or group');
     }
-    for (const deniedAction of deniedActions) {
-      if (!Token.isUnresolved(deniedAction) && !/^[a-z0-9-]+:[A-Za-z0-9*]+$/.test(deniedAction)) {
-        throw new ConstructValidationError(
-          this,
-          `deniedActions entries must look like service:Action, got "${deniedAction}"`,
-        );
-      }
-    }
+    assertIamActions(this, 'deniedActions', deniedActions);
     validateActionThreshold(this, threshold, thresholdType);
     const subscriberProperties = toActionSubscribers(this, subscribers);
 

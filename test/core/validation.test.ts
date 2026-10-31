@@ -2,8 +2,35 @@ import { Token } from 'aws-cdk-lib';
 import { Annotations, Match } from 'aws-cdk-lib/assertions';
 import { Construct } from 'constructs';
 import { describe, expect, it } from 'vitest';
-import { assertEmails, assertItemCount, assertPositive, assertRange, assertRegion } from '../../src/core/validation';
+import {
+  assertEmails,
+  assertIamActions,
+  assertItemCount,
+  assertPositive,
+  assertRange,
+  assertRegion,
+} from '../../src/core/validation';
 import { synth } from '../helpers';
+
+describe('assertIamActions', () => {
+  it('does not throw when every entry looks like service:Action', () => {
+    const probe = new Construct(
+      synth(() => {}),
+      'Probe',
+    );
+    expect(() => assertIamActions(probe, 'deniedActions', ['ec2:RunInstances', 's3:*'])).not.toThrow();
+  });
+
+  it('throws with the construct path for an entry without a colon', () => {
+    const probe = new Construct(
+      synth(() => {}),
+      'Probe',
+    );
+    expect(() => assertIamActions(probe, 'deniedActions', ['RunInstances'])).toThrow(
+      '[TestStack/Probe] deniedActions entries must look like service:Action, got "RunInstances"',
+    );
+  });
+});
 
 describe('assertEmails', () => {
   it('does not throw when every entry is a valid e-mail address', () => {
