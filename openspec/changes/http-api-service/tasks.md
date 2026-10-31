@@ -22,7 +22,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 Add `### HttpApiService` under `## Constructs` in `README.md` (purpose, throttling rationale, props table, example). Add
-  "`HttpApiService` construct." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
+- [ ] 2.1 Create `docs/constructs/HttpApiService.md` from `docs/constructs/_template.md`, filling every mandatory section from the TSDoc, the specs of this change and the tests. Purpose explains throttling as protection against abuse-driven spend. Resources: `AWS::ApiGatewayV2::Api`, `AWS::ApiGatewayV2::Stage`, `AWS::Logs::LogGroup`. Append these rows to `docs/aws-facts.md` (when a row with the same fact already exists, only add the construct to its Used by cell) and link them from the page's Verified AWS facts or Cost impact section: `| HTTP APIs cost 1 USD per million requests (REST APIs 3.50 USD) | https://aws.amazon.com/api-gateway/pricing/ | 2026-10-30 | HttpApiService |`. In `README.md` `## Constructs` add the line `- [HttpApiService](docs/constructs/HttpApiService.md): HTTP API (API Gateway v2) with a throttled default stage and access logs.`
+  Add "`HttpApiService` construct." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
   Commit `docs(http-api)`.
-  Verify: `bun run lint` `bun run test`
+  Verify: `bun run test` `bun run lint`

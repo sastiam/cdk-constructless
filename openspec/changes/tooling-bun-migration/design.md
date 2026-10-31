@@ -19,6 +19,9 @@ commands, rewrites `bunx tsc --noEmit` to Nuxt paths, and defaults to `bun test`
 - **Type check script is `tsc --noEmit -p tsconfig.json`** behind `bun run typecheck`, so task text never contains the raw compiler command.
 - **tsconfig split**: `tsconfig.json` type-checks `src` and `test`; `tsconfig.build.json` emits `lib` from `src` only.
 
+- **`prepare` stays and calls the compiler directly, not Bun**: npm runs `prepare` when a consumer installs from a git URL, so it must work on machines without Bun.
+- **TypeScript 7** (native compiler, merged by Dependabot #3) type-checks `aws-cdk-lib` 2.275 without changes; verified locally on 2026-10-31.
+
 ## Risks / Trade-offs
 
 - [Dependabot `bun` ecosystem gaps] → keep the weekly schedule; renovate is a later option.

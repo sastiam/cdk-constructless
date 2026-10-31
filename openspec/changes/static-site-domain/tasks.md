@@ -22,7 +22,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 In `README.md` `### StaticSiteDistribution` add a "Custom domain" section: the us-east-1 rule, how to pass a certificate from another stack
-  (`crossRegionReferences: true` on the consumer's stacks), Route 53 hosted zone cost. Add "`StaticSiteDistribution` custom domains." to `CHANGELOG.md`.
+- [ ] 2.1 Update `docs/constructs/StaticSiteDistribution.md`: add the certificate and alias records to Resources created, `StaticSiteDomain` to Props and defaults, a custom-domain example, and to Limits and risks the us-east-1 certificate rule and passing a certificate from another stack with `crossRegionReferences: true`. Append these rows to `docs/aws-facts.md` (when a row with the same fact already exists, only add the construct to its Used by cell) and link them from the page's Verified AWS facts or Cost impact section: `| Route 53 hosted zones cost 0.50 USD per month for the first 25 zones | https://aws.amazon.com/route53/pricing/ | 2026-10-30 | StaticSiteDistribution |`.
+  Add "`StaticSiteDistribution` custom domains." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
   Commit `docs(static-site)`.
-  Verify: `bun run lint` `bun run test`
+  Verify: `bun run test` `bun run lint`

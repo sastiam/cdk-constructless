@@ -19,7 +19,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 In `README.md` `### CostAwareFunction` add an "Alarms" paragraph and example `fn.addDefaultAlarms({ topic })`. Add
-  "`CostAwareFunction.addDefaultAlarms()`." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
+- [ ] 2.1 Update `docs/constructs/CostAwareFunction.md`: add the two alarms to Resources created, the `DefaultAlarmsOptions` table to Props and defaults, and an alarms example. Append these rows to `docs/aws-facts.md` (when a row with the same fact already exists, only add the construct to its Used by cell) and link them from the page's Verified AWS facts or Cost impact section: `| Assumption (verify on the pricing page): the CloudWatch free tier includes 10 standard alarms per month | https://aws.amazon.com/cloudwatch/pricing/ | 2026-10-30 | CostAwareFunction |`.
+  Add "`CostAwareFunction.addDefaultAlarms()`." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
   Commit `docs(lambda)`.
-  Verify: `bun run lint` `bun run test`
+  Verify: `bun run test` `bun run lint`

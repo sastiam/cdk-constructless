@@ -9,6 +9,7 @@ easily gets thresholds and subscribers wrong. A typed `CostBudget` construct is 
 
 - New `CostBudget` construct (monthly `COST` budget in USD) with validated limit, thresholds and subscribers.
 - Default thresholds: 60/80/100 % actual and 100 % forecasted, created only when subscribers are given.
+- Optional `linkedAccountIds` filter (`CostFilters.LinkedAccount`) so a management account can budget each member account (issue #75, folded in).
 - Exposes `budgetName` and the underlying `CfnBudget` for Budget Actions.
 
 ## Capabilities
