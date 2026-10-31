@@ -2,7 +2,7 @@
 
 ## 1. Stop-instances action
 
-- [ ] 1.1 Create `src/finops/budget-stop-instances-action.ts` exporting:
+- [x] 1.1 Create `src/finops/budget-stop-instances-action.ts` exporting:
   `enum BudgetActionThresholdType { PERCENTAGE = 'PERCENTAGE', ABSOLUTE_VALUE = 'ABSOLUTE_VALUE' }`;
   `enum BudgetActionApprovalModel { AUTOMATIC = 'AUTOMATIC', MANUAL = 'MANUAL' }`;
   `interface BudgetActionSubscriber { readonly email?: string; readonly topic?: sns.ITopic }` (exactly one must be set, else throw `each subscriber needs exactly one of email or topic`);
@@ -21,7 +21,7 @@
   Class TSDoc lists the limits from `design.md` (later instances not covered, no cross-account, 8-12 h lag, reverted action not re-evaluated, Free Plan availability unconfirmed).
   Export from `src/index.ts`.
   Verify: `bun run typecheck` `bun run lint`
-- [ ] 1.2 Create `test/finops/budget-stop-instances-action.test.ts` with one test per scenario in `specs/budget-actions/spec.md` of this change, using
+- [x] 1.2 Create `test/finops/budget-stop-instances-action.test.ts` with one test per scenario in `specs/budget-actions/spec.md` of this change, using
   `new CostBudget(stack, 'Budget', { limitUsd: 5, emails: ['alerts@example.com'] })` and subscriber `{ email: 'alerts@example.com' }`:
   exact `AWS::Budgets::BudgetsAction` properties; `DependsOn` contains the budget logical id; default role ARN is `{ 'Fn::GetAtt': [<role logical id>, 'Arn'] }`;
   0 and 101 instance IDs throw the exact messages; 0 and 12 subscribers throw; a subscriber with both email and topic throws;
