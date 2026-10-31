@@ -1,0 +1,10 @@
+node_modules/
+lib/
+cdk.out/
+coverage/
+*.tsbuildinfo
+*.tgz
+.env
+.env.*
+!.env.example
+.DS_Store

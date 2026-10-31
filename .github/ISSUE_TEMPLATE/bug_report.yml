@@ -1,0 +1,27 @@
+name: Bug report
+description: Something does not work as documented
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Include the construct, the props you passed, and the error or unexpected template.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: cdk-constructless, aws-cdk-lib and Node.js versions
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: Do not paste account IDs, e-mail addresses, credentials or ARNs from your real environment.

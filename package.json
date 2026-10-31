@@ -1,0 +1,39 @@
+{
+  "name": "cdk-constructless",
+  "version": "0.0.0",
+  "description": "Reusable AWS CDK constructs for cost control and security guardrails on low-budget AWS accounts.",
+  "license": "MIT",
+  "author": "Sebastian Chota",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sastiam/cdk-constructless.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sastiam/cdk-constructless/issues"
+  },
+  "homepage": "https://github.com/sastiam/cdk-constructless#readme",
+  "keywords": ["aws", "cdk", "constructs", "finops", "budgets", "guardrails"],
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": ["lib"],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "prepare": "tsc"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.275.0",
+    "constructs": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "aws-cdk-lib": "2.275.0",
+    "constructs": "10.8.1",
+    "typescript": "~5.9.0",
+    "vitest": "^3.0.0"
+  }
+}
