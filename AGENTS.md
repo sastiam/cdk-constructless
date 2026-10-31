@@ -28,9 +28,7 @@ so every tool reads the same rules. When a task conflicts with these rules, stop
 
 ## cdk-nag
 
-- Suppress findings only through `suppressNag` from `src/core/nag.ts`. Never call `NagSuppressions` directly.
-- Each suppression has a `reason` of at least 20 characters that explains why the finding does not apply.
-- List every suppression (rule id and reason) in the construct's TSDoc.
+- cdk-nag 3 runs as a CDK policy-validation plugin; acknowledge deliberate findings only through `suppressNag` (reason of at least 20 characters, listed in the construct TSDoc), using the exact finding ids from the validation report (IAM4/IAM5 are per finding, `RuleId[FindingId]`); tests whose stacks keep findings left to the consumer pass `{ nag: false }` to `synth` with a comment.
 
 ## Task pitfalls (openspec-cascade)
 
