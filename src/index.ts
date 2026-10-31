@@ -1,1 +1,1 @@
-export {};
+export { ConstructValidationError } from './core/errors';

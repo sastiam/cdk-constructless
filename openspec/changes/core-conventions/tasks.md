@@ -2,7 +2,7 @@
 
 ## 1. Core helpers
 
-- [ ] 1.1 Create `src/core/errors.ts` exporting `class ConstructValidationError extends Error` with constructor
+- [x] 1.1 Create `src/core/errors.ts` exporting `class ConstructValidationError extends Error` with constructor
   `(scope: IConstruct, message: string)`, `name = 'ConstructValidationError'` and message "[${scope.node.path}] ${message}".
   Create `src/core/validation.ts` exporting:
   `assertPositive(scope, name: string, value: number)` → throws "${name} must be greater than 0, got ${value}";
@@ -20,7 +20,7 @@
   exactly as the validation report prints it (for example `AwsSolutions-IAM5[Resource::*]`); document this in the TSDoc of `suppressNag`. Create `src/core/index.ts` re-exporting the three files.
   Replace `src/index.ts` with `export { ConstructValidationError } from './core/errors';`.
   Verify: `bun run typecheck` `bun run lint`
-- [ ] 1.2 Create `test/helpers/index.ts` exporting:
+- [x] 1.2 Create `test/helpers/index.ts` exporting:
   `synth(build: (stack: Stack) => void, options?: { region?: string; envAgnostic?: boolean; nag?: boolean }): Stack` — new `App`, `Stack(app, 'TestStack', { env })`
   with env `{ account: '123456789012', region: options?.region ?? 'us-east-1' }` unless `envAgnostic`; unless `options?.nag === false` call
   `Validations.of(app).addPlugins(new AwsSolutionsChecks(app))` before `build(stack)`; returns the stack. With the plugin, any cdk-nag error makes the first synthesis
