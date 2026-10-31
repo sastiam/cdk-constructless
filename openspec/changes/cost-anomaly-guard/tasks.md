@@ -2,7 +2,7 @@
 
 ## 1. CostAnomalyGuard
 
-- [ ] 1.1 Create `src/finops/cost-anomaly-guard.ts` exporting `enum AnomalyFrequency { DAILY = 'DAILY', WEEKLY = 'WEEKLY', IMMEDIATE = 'IMMEDIATE' }`,
+- [x] 1.1 Create `src/finops/cost-anomaly-guard.ts` exporting `enum AnomalyFrequency { DAILY = 'DAILY', WEEKLY = 'WEEKLY', IMMEDIATE = 'IMMEDIATE' }`,
   `type AnomalyMonitorSource = { readonly kind: 'services' } | { readonly kind: 'linkedAccounts'; readonly accountIds: string[] } | { readonly kind: 'existing'; readonly monitorArn: string }`,
   `interface CostAnomalyGuardProps { readonly monitor?: AnomalyMonitorSource /* @default { kind: 'services' } */; readonly monitorName?: string; readonly subscriptionName?: string; readonly emails?: string[]; readonly topic?: sns.ITopic;
   readonly frequency?: AnomalyFrequency /* @default DAILY for e-mail, IMMEDIATE for a topic */; readonly thresholdUsd?: number /* @default 1 */ }`
@@ -15,7 +15,7 @@
   `thresholdExpression: JSON.stringify({ Dimensions: { Key: 'ANOMALY_TOTAL_IMPACT_ABSOLUTE', MatchOptions: ['GREATER_THAN_OR_EQUAL'], Values: [String(thresholdUsd)] } })`, never `threshold`.
   TSDoc: the SNS topic must allow `costalerts.amazonaws.com` (use `AlertsTopic` with `allowCostAnomalyDetection: true`); AWS may already have created a services monitor, reuse it with `kind: 'existing'`. Export from `src/index.ts`.
   Verify: `bun run typecheck` `bun run lint`
-- [ ] 1.2 Create `test/finops/cost-anomaly-guard.test.ts` covering each scenario in this change's `specs/finops-alerts/spec.md` with exact property values (compare `ThresholdExpression` and `MonitorSpecification` with `JSON.parse`),
+- [x] 1.2 Create `test/finops/cost-anomaly-guard.test.ts` covering each scenario in this change's `specs/finops-alerts/spec.md` with exact property values (compare `ThresholdExpression` and `MonitorSpecification` with `JSON.parse`),
   the existing-monitor case using `'arn:aws:ce::123456789012:anomalymonitor/abc'`, the topic case using `new AlertsTopic(stack, 'Alerts', { allowCostAnomalyDetection: true }).topic`, and every validation message. Snapshot of the default case and `expectNoNagErrors(stack)`.
   Commit `feat(finops)`.
   Verify: `bun run test test/finops/cost-anomaly-guard.test.ts` `bun run lint`
