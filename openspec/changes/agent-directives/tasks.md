@@ -2,7 +2,7 @@
 
 ## 1. Agent directives
 
-- [ ] 1.1 Create `AGENTS.md` with these sections and rules (bullets, verbatim intent):
+- [x] 1.1 Create `AGENTS.md` with these sections and rules (bullets, verbatim intent):
   "Construct design": props are `export interface <Name>Props` with only `readonly` members and TSDoc including `@default`;
   validate props in the constructor only when `!Token.isUnresolved(value)` using helpers from `src/core/validation.ts`;
   warnings use `Annotations.of(this).addWarningV2('<lib>:<rule>', message)`; never read `process.env` or call `fromLookup` inside a construct;
