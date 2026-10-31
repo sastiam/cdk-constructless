@@ -24,7 +24,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 Create `docs/constructs/AlertsTopic.md` from `docs/constructs/_template.md`, filling every mandatory section. Limits and risks: notification-only rule, same-account requirement,
+- [x] 2.1 Create `docs/constructs/AlertsTopic.md` from `docs/constructs/_template.md`, filling every mandatory section. Limits and risks: notification-only rule, same-account requirement,
   the `AwsSolutions-SNS2` suppression and reason, the 10 e-mail cap is a library choice (not an AWS limit), each e-mail must confirm its subscription.
   Append these rows to `docs/aws-facts.md` (when a row with the same fact already exists, only add the construct to its Used by cell):
   `| Budgets SNS topic policy: budgets.amazonaws.com SNS:Publish with aws:SourceAccount and aws:SourceArn arn:aws:budgets::<account>:*; topics must be in the same account | https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-sns-policy.html | 2026-10-31 | AlertsTopic |`;

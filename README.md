@@ -34,6 +34,7 @@ Each construct is documented in [`docs/constructs/`](docs/constructs/), with one
 - [CostBudget](docs/constructs/CostBudget.md): monthly USD cost budget with threshold notifications.
 - [BudgetActionExecutionRole](docs/constructs/BudgetActionExecutionRole.md): IAM role AWS Budgets assumes to run Budget Actions.
 - [BudgetStopInstancesAction](docs/constructs/BudgetStopInstancesAction.md): Budget Action that stops listed EC2 or RDS instances through SSM.
+- [AlertsTopic](docs/constructs/AlertsTopic.md): notification-only SNS topic for Budgets, CloudWatch and Cost Anomaly Detection alerts.
 
 ## Development
 
