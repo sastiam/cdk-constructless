@@ -2,8 +2,47 @@ import { Token } from 'aws-cdk-lib';
 import { Annotations, Match } from 'aws-cdk-lib/assertions';
 import { Construct } from 'constructs';
 import { describe, expect, it } from 'vitest';
-import { assertItemCount, assertPositive, assertRange, assertRegion } from '../../src/core/validation';
+import { assertEmails, assertItemCount, assertPositive, assertRange, assertRegion } from '../../src/core/validation';
 import { synth } from '../helpers';
+
+describe('assertEmails', () => {
+  it('does not throw when every entry is a valid e-mail address', () => {
+    const probe = new Construct(
+      synth(() => {}),
+      'Probe',
+    );
+    expect(() => assertEmails(probe, 'emails', ['alerts@example.com', 'ops.team@example.co.uk'])).not.toThrow();
+  });
+
+  it('throws with the construct path for an entry without an @ sign', () => {
+    const probe = new Construct(
+      synth(() => {}),
+      'Probe',
+    );
+    expect(() => assertEmails(probe, 'emails', ['alerts.example.com'])).toThrow(
+      '[TestStack/Probe] emails contains an invalid email "alerts.example.com"',
+    );
+  });
+
+  it('rejects a domain with an empty label and addresses longer than 254 characters', () => {
+    const probe = new Construct(
+      synth(() => {}),
+      'Probe',
+    );
+    expect(() => assertEmails(probe, 'emails', ['alerts@example..com'])).toThrow('invalid email');
+    expect(() => assertEmails(probe, 'emails', [`${'a'.repeat(250)}@example.com`])).toThrow('invalid email');
+  });
+
+  it('rejects a pathological input quickly (no polynomial backtracking)', () => {
+    const probe = new Construct(
+      synth(() => {}),
+      'Probe',
+    );
+    const started = Date.now();
+    expect(() => assertEmails(probe, 'emails', [`!@!.${'!.'.repeat(50_000)}`])).toThrow('invalid email');
+    expect(Date.now() - started).toBeLessThan(100);
+  });
+});
 
 describe('assertPositive', () => {
   it('does not throw for a value greater than 0', () => {
