@@ -4,3 +4,6 @@ Every AWS fact that a construct relies on (pricing, quotas, limits and service b
 
 | Fact | Source | Read date | Used by |
 | --- | --- | --- | --- |
+| Budgets data refreshes up to three times a day, 8 to 12 hours apart | https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html | 2026-10-30 | CostBudget |
+| BudgetData CostFilters supports a LinkedAccount filter | https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-properties-budgets-budget-budgetdata.html | 2026-10-31 | CostBudget |
+| Assumption (verify before 1.0): a budget supports at most 5 notifications and 10 e-mail subscribers per notification | https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-controls.html | 2026-10-30 | CostBudget |
