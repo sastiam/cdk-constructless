@@ -16,3 +16,5 @@ Every AWS fact that a construct relies on (pricing, quotas, limits and service b
 | Budgets SNS topic policy: budgets.amazonaws.com SNS:Publish with aws:SourceAccount and aws:SourceArn arn:aws:budgets::<account>:*; topics must be in the same account | https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-sns-policy.html | 2026-10-31 | AlertsTopic |
 | Cost Anomaly Detection publishes to SNS as costalerts.amazonaws.com | https://docs.aws.amazon.com/cost-management/latest/userguide/ad-SNS.html | 2026-10-31 | AlertsTopic |
 | A KMS customer managed key costs 1 USD per month | https://aws.amazon.com/kms/pricing/ | 2026-10-30 | AlertsTopic |
+| Billing metric data is stored in us-east-1, represents worldwide charges, is USD only; recommended statistic Maximum with a 6-hour period | https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html | 2026-10-31 | BillingAlarm |
+| CloudWatch free tier includes 10 standard-resolution alarm metrics per month | https://aws.amazon.com/cloudwatch/pricing/ | 2026-10-31 | BillingAlarm |
