@@ -29,7 +29,9 @@ npm install github:sastiam/cdk-constructless
 
 ## Constructs
 
-Each construct is documented in [`docs/constructs/`](docs/constructs/), with one page per construct named after its class. No constructs are released yet, so this list is empty.
+Each construct is documented in [`docs/constructs/`](docs/constructs/), with one page per construct named after its class. No constructs are released yet.
+
+- [CostBudget](docs/constructs/CostBudget.md): monthly USD cost budget with threshold notifications.
 
 ## Development
 
