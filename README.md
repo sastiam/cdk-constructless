@@ -32,6 +32,7 @@ npm install github:sastiam/cdk-constructless
 Each construct is documented in [`docs/constructs/`](docs/constructs/), with one page per construct named after its class. No constructs are released yet.
 
 - [CostBudget](docs/constructs/CostBudget.md): monthly USD cost budget with threshold notifications.
+- [BudgetActionExecutionRole](docs/constructs/BudgetActionExecutionRole.md): IAM role AWS Budgets assumes to run Budget Actions.
 
 ## Development
 
