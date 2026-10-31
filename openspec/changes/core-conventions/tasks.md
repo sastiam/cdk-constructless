@@ -32,7 +32,7 @@
 
 ## 2. Core tests
 
-- [ ] 2.1 Create `test/core/validation.test.ts`: one test per helper for the passing case and the exact thrown message
+- [x] 2.1 Create `test/core/validation.test.ts`: one test per helper for the passing case and the exact thrown message
   (match with `toThrow(<exact message>)` including the `[TestStack/Probe]` path prefix, using a `new Construct(stack, 'Probe')` scope);
   a test that `assertPositive` with `Token.asNumber({ Ref: 'P' })` does not throw; a test that `assertRegion` on an `envAgnostic` stack
   produces exactly one warning containing `cdk-constructless:unresolved-region`; a test that `assertRegion(scope, 'us-east-1', 'X')`
