@@ -41,6 +41,7 @@ Each construct is documented in [`docs/constructs/`](docs/constructs/), with one
 - [FinOpsGuardrail](docs/constructs/FinOpsGuardrail.md): budget, alerts topic, billing alarm and optional Budget Actions in one construct.
 - [LabCostAspects](docs/constructs/LabCostAspects.md): aspects for log retention, S3 cleanup rules and fixed-cost warnings.
 - [CostAnomalyGuard](docs/constructs/CostAnomalyGuard.md): Cost Anomaly Detection monitor and subscription with a USD impact threshold.
+- [LabStack](docs/constructs/LabStack.md): destroy-by-default stack with mandatory tags and lab cost aspects.
 
 ## Development
 
