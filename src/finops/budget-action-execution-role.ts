@@ -83,6 +83,8 @@ export class BudgetActionExecutionRole extends Construct {
 
   private readonly grantedTargets = new Set<StopInstancesTarget>();
 
+  private readonly grantedPolicyArns = new Set<string>();
+
   /**
    * @param scope the parent construct
    * @param id the construct id
@@ -148,5 +150,48 @@ export class BudgetActionExecutionRole extends Construct {
           'Budget Actions stop instances through SSM automation documents; AWS documents these wildcard resources',
       })),
     );
+  }
+
+  /**
+   * Grants the role the permissions to attach and detach one managed policy to and from roles, users and groups.
+   *
+   * The statement covers the six `Attach*Policy` and `Detach*Policy` actions on every principal type. Its resource is `*`, and the
+   * condition `ArnEquals` on `iam:PolicyARN` limits the calls to the given policy. Each policy ARN is granted once; calling this
+   * again for the same policy does nothing.
+   *
+   * Suppressions: the statement reports `AwsSolutions-IAM5[Resource::*]` on the role's default policy, which this method acknowledges
+   * with the reason "IAM attach actions are scoped by iam:PolicyARN".
+   *
+   * @param policy the managed policy that AWS Budgets may attach and detach, for example the deny policy of `BudgetDenyAction`
+   */
+  public allowApplyIamPolicy(policy: iam.IManagedPolicy): void {
+    if (this.grantedPolicyArns.has(policy.managedPolicyArn)) {
+      return;
+    }
+    this.grantedPolicyArns.add(policy.managedPolicyArn);
+
+    this.role.addToPolicy(
+      new iam.PolicyStatement({
+        actions: [
+          'iam:AttachRolePolicy',
+          'iam:DetachRolePolicy',
+          'iam:AttachUserPolicy',
+          'iam:DetachUserPolicy',
+          'iam:AttachGroupPolicy',
+          'iam:DetachGroupPolicy',
+        ],
+        resources: ['*'],
+        conditions: {
+          ArnEquals: { 'iam:PolicyARN': policy.managedPolicyArn },
+        },
+      }),
+    );
+
+    suppressNag(this.role.node.findChild('DefaultPolicy'), [
+      {
+        id: 'AwsSolutions-IAM5[Resource::*]',
+        reason: 'IAM attach actions are scoped by iam:PolicyARN',
+      },
+    ]);
   }
 }

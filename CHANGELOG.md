@@ -14,6 +14,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - `BudgetStopInstancesAction` construct.
 - `AlertsTopic` construct.
 - `BillingAlarm` construct.
+- `BudgetDenyAction` construct.
 
 ### Changed
 

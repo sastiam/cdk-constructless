@@ -2,7 +2,7 @@
 
 ## 1. Shared action types
 
-- [ ] 1.1 Create `src/finops/budget-action-common.ts` and move into it, unchanged, from `src/finops/budget-stop-instances-action.ts`: `BudgetActionThresholdType`, `BudgetActionApprovalModel`,
+- [x] 1.1 Create `src/finops/budget-action-common.ts` and move into it, unchanged, from `src/finops/budget-stop-instances-action.ts`: `BudgetActionThresholdType`, `BudgetActionApprovalModel`,
   `BudgetActionSubscriber`, plus two new exported functions extracted from that file's constructor: `validateActionThreshold(scope, threshold: number, type: BudgetActionThresholdType)` and
   `toActionSubscribers(scope, subscribers: BudgetActionSubscriber[]): budgets.CfnBudgetsAction.SubscriberProperty[]` (includes the 1-11 count check and the exactly-one-of check with the same messages).
   Make `budget-stop-instances-action.ts` import them; keep every export in `src/index.ts` so the public API does not change.
@@ -11,7 +11,7 @@
 
 ## 2. BudgetDenyAction
 
-- [ ] 2.1 In `src/finops/budget-action-execution-role.ts` add `allowApplyIamPolicy(policy: iam.IManagedPolicy): void` (once per policy ARN, tracked in a `Set`) adding a statement with actions
+- [x] 2.1 In `src/finops/budget-action-execution-role.ts` add `allowApplyIamPolicy(policy: iam.IManagedPolicy): void` (once per policy ARN, tracked in a `Set`) adding a statement with actions
   `iam:AttachRolePolicy`, `iam:DetachRolePolicy`, `iam:AttachUserPolicy`, `iam:DetachUserPolicy`, `iam:AttachGroupPolicy`, `iam:DetachGroupPolicy`, resources `['*']`,
   conditions `{ ArnEquals: { 'iam:PolicyARN': policy.managedPolicyArn } }`, and acknowledge every new `AwsSolutions-IAM5[...]` finding id the validation report prints for the role policy with `suppressNag` (reason: IAM attach actions are scoped by iam:PolicyARN).
   Create `src/finops/budget-deny-action.ts` exporting `const DEFAULT_DENIED_COMPUTE_ACTIONS: readonly string[]` = `ec2:RunInstances`, `ec2:StartInstances`, `lambda:CreateFunction`, `ecs:CreateService`, `ecs:RunTask`,
@@ -25,14 +25,14 @@
   (omit empty lists), defaults `PERCENTAGE`, `ACTUAL`, `AUTOMATIC`; call `executionRole.allowApplyIamPolicy(denyPolicy)`; `action.addDependency(budget.budget)`.
   If the validation report flags `AwsSolutions-IAM5[...]` findings on the deny policy, acknowledge each finding id with `suppressNag` and reason 'Deny statements on all resources only remove permissions; no access is granted'. Export from `src/index.ts`.
   Verify: `bun run typecheck` `bun run lint`
-- [ ] 2.2 Create `test/finops/budget-deny-action.test.ts` covering each scenario in this change's `specs/budget-actions/spec.md` with exact properties, using `iam.Role.fromRoleName(stack, 'Lab', 'LabRole')`
+- [x] 2.2 Create `test/finops/budget-deny-action.test.ts` covering each scenario in this change's `specs/budget-actions/spec.md` with exact properties, using `iam.Role.fromRoleName(stack, 'Lab', 'LabRole')`
   and a `CostBudget`; plus users and groups mapped to names; both error messages. Snapshot and `expectNoNagErrors(stack)`.
   Commit `feat(finops)`.
   Verify: `bun run test test/finops` `bun run lint`
 
 ## 3. Documentation
 
-- [ ] 3.1 Create `docs/constructs/BudgetDenyAction.md` from `docs/constructs/_template.md`, filling every mandatory section (deny is applied at the threshold and removed only by reverting the action;
+- [x] 3.1 Create `docs/constructs/BudgetDenyAction.md` from `docs/constructs/_template.md`, filling every mandatory section (deny is applied at the threshold and removed only by reverting the action;
   existing resources keep billing; pair with `BudgetStopInstancesAction`). Update `docs/constructs/BudgetActionExecutionRole.md` with the IAM attach permissions.
   Link the existing Budget Actions rows in `docs/aws-facts.md` and add `BudgetDenyAction` to their Used by cells; append
   `| The first two action-enabled budgets per account are free each month; each additional one costs 0.10 USD per day | https://aws.amazon.com/aws-cost-management/aws-budgets/pricing/ | 2026-10-31 | BudgetDenyAction, BudgetStopInstancesAction |`
