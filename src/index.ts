@@ -10,4 +10,3 @@ export * from './finops/cost-anomaly-guard';
 export * from './finops/cost-budget';
 export * from './finops/finops-guardrail';
 export * from './finops/lab-cost-aspects';
-export * from './finops/lab-stack';
