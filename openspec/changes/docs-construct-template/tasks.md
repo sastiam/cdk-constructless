@@ -2,7 +2,7 @@
 
 ## 1. Templates
 
-- [ ] 1.1 Create `docs/constructs/_template.md` with a title line `# <ConstructName>` and exactly these `##` headings in this order, each followed by an
+- [x] 1.1 Create `docs/constructs/_template.md` with a title line `# <ConstructName>` and exactly these `##` headings in this order, each followed by an
   HTML comment explaining what to write: `## Purpose` (one paragraph: the problem it solves), `## Resources created` (table: CloudFormation type, count, notes),
   `## Props and defaults` (table: prop, type, default, description; copy from TSDoc), `## Cost impact` (fixed / variable / none, with USD numbers and links to rows in aws-facts),
   `## Verified AWS facts` (bullets linking to rows of `docs/aws-facts.md`), `## Limits and risks` (bullets, including cdk-nag suppressions and their reasons),
