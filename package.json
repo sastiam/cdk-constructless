@@ -12,27 +12,43 @@
     "url": "https://github.com/sastiam/cdk-constructless/issues"
   },
   "homepage": "https://github.com/sastiam/cdk-constructless#readme",
-  "keywords": ["aws", "cdk", "constructs", "finops", "budgets", "guardrails"],
+  "keywords": [
+    "aws",
+    "cdk",
+    "constructs",
+    "finops",
+    "budgets",
+    "guardrails"
+  ],
+  "packageManager": "bun@1.4.4",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "build": "tsc",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests",
-    "prepare": "tsc"
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "test": "vitest run",
+    "test:integ": "echo 'integration tests arrive in E7' && exit 0",
+    "prepare": "tsc -p tsconfig.build.json"
   },
   "peerDependencies": {
     "aws-cdk-lib": "^2.275.0",
     "constructs": "^10.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.6.4",
     "@types/node": "^26.6.5",
     "aws-cdk-lib": "2.275.0",
+    "cdk-nag": "^3.0.2",
     "constructs": "10.8.1",
+    "esbuild": "^0.28.2",
     "typescript": "~7.0.2",
     "vitest": "^5.0.5"
   }

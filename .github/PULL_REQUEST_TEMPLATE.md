@@ -5,7 +5,7 @@
 ## Checklist
 
 - [ ] Tests added or updated
-- [ ] `npm run typecheck && npm test` pass locally
+- [ ] `bun run typecheck && bun run test` pass locally
 - [ ] No account IDs, e-mails or environment-specific values
 - [ ] `CHANGELOG.md` updated under `[Unreleased]`
 - [ ] Commit messages follow Conventional Commits

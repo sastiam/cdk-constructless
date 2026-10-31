@@ -15,7 +15,8 @@ Reusable [AWS CDK](https://docs.aws.amazon.com/cdk/) constructs for cost control
 
 ## Requirements
 
-- Node.js >= 20
+- Node.js >= 22
+- Bun >= 1.4 (development only)
 - `aws-cdk-lib` ^2.275.0 and `constructs` ^10 (peer dependencies)
 
 ## Installation
@@ -29,10 +30,10 @@ npm install github:sastiam/cdk-constructless
 ## Development
 
 ```bash
-npm ci
-npm run typecheck
-npm test
-npm run build
+bun install
+bun run typecheck
+bun run test
+bun run build
 ```
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow and commit conventions.

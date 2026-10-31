@@ -7,7 +7,7 @@ Thanks for your interest in improving `cdk-constructless`.
 1. Open an issue to discuss non-trivial changes before starting.
 2. Fork the repository and create a branch from `main` (`feat/<topic>`, `fix/<topic>`, `docs/<topic>`).
 3. Make your change with tests.
-4. Run `npm run typecheck && npm test` locally.
+4. Run `bun run typecheck && bun run test` locally.
 5. Open a pull request using the template. Pull requests are squash-merged.
 
 ## Commit messages
