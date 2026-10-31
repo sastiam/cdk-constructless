@@ -11,7 +11,7 @@
 
 ## 2. BudgetDenyAction
 
-- [ ] 2.1 In `src/finops/budget-action-execution-role.ts` add `allowApplyIamPolicy(policy: iam.IManagedPolicy): void` (once per policy ARN, tracked in a `Set`) adding a statement with actions
+- [x] 2.1 In `src/finops/budget-action-execution-role.ts` add `allowApplyIamPolicy(policy: iam.IManagedPolicy): void` (once per policy ARN, tracked in a `Set`) adding a statement with actions
   `iam:AttachRolePolicy`, `iam:DetachRolePolicy`, `iam:AttachUserPolicy`, `iam:DetachUserPolicy`, `iam:AttachGroupPolicy`, `iam:DetachGroupPolicy`, resources `['*']`,
   conditions `{ ArnEquals: { 'iam:PolicyARN': policy.managedPolicyArn } }`, and acknowledge every new `AwsSolutions-IAM5[...]` finding id the validation report prints for the role policy with `suppressNag` (reason: IAM attach actions are scoped by iam:PolicyARN).
   Create `src/finops/budget-deny-action.ts` exporting `const DEFAULT_DENIED_COMPUTE_ACTIONS: readonly string[]` = `ec2:RunInstances`, `ec2:StartInstances`, `lambda:CreateFunction`, `ecs:CreateService`, `ecs:RunTask`,
@@ -25,7 +25,7 @@
   (omit empty lists), defaults `PERCENTAGE`, `ACTUAL`, `AUTOMATIC`; call `executionRole.allowApplyIamPolicy(denyPolicy)`; `action.addDependency(budget.budget)`.
   If the validation report flags `AwsSolutions-IAM5[...]` findings on the deny policy, acknowledge each finding id with `suppressNag` and reason 'Deny statements on all resources only remove permissions; no access is granted'. Export from `src/index.ts`.
   Verify: `bun run typecheck` `bun run lint`
-- [ ] 2.2 Create `test/finops/budget-deny-action.test.ts` covering each scenario in this change's `specs/budget-actions/spec.md` with exact properties, using `iam.Role.fromRoleName(stack, 'Lab', 'LabRole')`
+- [x] 2.2 Create `test/finops/budget-deny-action.test.ts` covering each scenario in this change's `specs/budget-actions/spec.md` with exact properties, using `iam.Role.fromRoleName(stack, 'Lab', 'LabRole')`
   and a `CostBudget`; plus users and groups mapped to names; both error messages. Snapshot and `expectNoNagErrors(stack)`.
   Commit `feat(finops)`.
   Verify: `bun run test test/finops` `bun run lint`
