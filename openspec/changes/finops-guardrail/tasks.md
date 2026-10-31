@@ -18,7 +18,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 Create `docs/constructs/FinOpsGuardrail.md` from `docs/constructs/_template.md`, filling every mandatory section with a full example (5 USD lab: alarm at 4 USD, stop EC2 at 80 percent, deny compute at 100 percent)
+- [x] 2.1 Create `docs/constructs/FinOpsGuardrail.md` from `docs/constructs/_template.md`, filling every mandatory section with a full example (5 USD lab: alarm at 4 USD, stop EC2 at 80 percent, deny compute at 100 percent)
   and a Cost impact table linking the existing `docs/aws-facts.md` rows of its parts (add `FinOpsGuardrail` to their Used by cells; add no new rows).
   In `README.md` `## Constructs` add `- [FinOpsGuardrail](docs/constructs/FinOpsGuardrail.md): budget, alerts topic, billing alarm and optional Budget Actions in one construct.`
   Add "`FinOpsGuardrail` construct." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
