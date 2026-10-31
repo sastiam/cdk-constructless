@@ -14,7 +14,7 @@
 
 ## 2. Coverage test
 
-- [ ] 2.1 Create `test/docs-coverage.test.ts`: import `* as lib from '../src'` and `Construct` from `constructs`; collect export names whose value is a function with
+- [x] 2.1 Create `test/docs-coverage.test.ts`: import `* as lib from '../src'` and `Construct` from `constructs`; collect export names whose value is a function with
   `value.prototype instanceof Construct`; for each, assert `fs.existsSync(path.join(__dirname, '../docs/constructs', name + '.md'))` with message `missing docs/constructs/<name>.md`
   and that the file contains each of the 8 headings from `_template.md` (message `docs/constructs/<name>.md is missing "<heading>"`). Export the heading list as
   `MANDATORY_HEADINGS` from `test/helpers/docs.ts` and import it. Add a test that `docs/aws-facts.md` rows (lines starting with `|` after the header separator) each have 4 cells,
