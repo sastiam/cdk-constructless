@@ -1,0 +1,19 @@
+schema: spec-driven
+
+context: |
+  Public, generic AWS CDK v2 construct library in TypeScript (no jsii). Write all artifacts in English.
+  Package manager and script runner: Bun. Tests: vitest running on Node via `bun run test`.
+  Changes are executed by openspec-cascade (one fresh agent session per task; the harness runs the
+  backticked `bun ...` commands after "Verify:" and commits only verified work).
+  Never put account IDs, e-mail addresses or ARNs specific to a real account in code, tests or docs;
+  use 123456789012 and alerts@example.com.
+  Constructs must not create fixed-cost resources by default (see AGENTS.md).
+
+rules:
+  tasks:
+    - Every task MUST end with "Verify:" followed by one or more backticked commands that start with `bun run` or `bun install`.
+    - Never write the phrases "full verification", "E2E", "git push" or "open the PR" anywhere in a task, never write the word "both" before the compiler name, and never put the compiler in a Verify command; use `bun run typecheck` for type checks.
+    - Never rely on `bun test`; tests run with `bun run test <path>`.
+    - The last task of every "##" section names its Conventional Commit type, e.g. Commit `feat(finops)`.
+    - Each task names the exact files, exported symbols, prop names, default values and error messages; nothing is left for the implementer to decide.
+    - Tests for a construct live in test/<domain>/<file>.test.ts and use the helpers in test/helpers.
