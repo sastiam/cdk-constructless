@@ -2,7 +2,7 @@
 
 ## 1. AlertsTopic
 
-- [ ] 1.1 Add to `src/core/validation.ts` `assertEmails(scope, name: string, emails: readonly string[])`: for each value that is not an unresolved token and does not match
+- [x] 1.1 Add to `src/core/validation.ts` `assertEmails(scope, name: string, emails: readonly string[])`: for each value that is not an unresolved token and does not match
   `/^[^\s@]+@[^\s@]+\.[^\s@]+$/`, throw `ConstructValidationError` with message: <name> contains an invalid email "<value>" (value in double quotes).
   Add a passing and a failing case to `test/core/validation.test.ts`.
   Create `src/finops/alerts-topic.ts` exporting `interface AlertsTopicProps { readonly topicName?: string; readonly emails?: string[]; readonly allowBudgets?: boolean /* @default true */; readonly allowCostAnomalyDetection?: boolean /* @default false */; readonly masterKey?: kms.IKey }`
@@ -15,7 +15,7 @@
   Without `masterKey`: `suppressNag(this.topic, [{ id: 'AwsSolutions-SNS2', reason: 'A KMS key costs 1 USD per month; this topic carries no sensitive data; pass masterKey to encrypt' }])`.
   Class TSDoc: notification-only; never subscribe automation (Lambda, SSM) to it; Budgets topics must be in the same account. Export from `src/index.ts`.
   Verify: `bun run typecheck` `bun run test test/core` `bun run lint`
-- [ ] 1.2 Create `test/finops/alerts-topic.test.ts` covering each scenario in `specs/finops-alerts/spec.md` with exact `AWS::SNS::TopicPolicy` statements
+- [x] 1.2 Create `test/finops/alerts-topic.test.ts` covering each scenario in `specs/finops-alerts/spec.md` with exact `AWS::SNS::TopicPolicy` statements
   (match the Budgets statement's `Principal`, `Action`, `Condition.StringEquals['aws:SourceAccount']` and the `Fn::Join` of the `aws:SourceArn` with `Match.anyValue()` only for the partition token),
   the TLS deny statement (`Condition: { Bool: { 'aws:SecureTransport': 'false' } }`), subscription `Protocol: 'email'`, both error messages, and with a `new kms.Key(stack, 'Key')`
   a key policy statement allowing `kms:GenerateDataKey*` and `kms:Decrypt` to `budgets.amazonaws.com` and `KmsMasterKeyId` set on the topic. Snapshot of the default case and `expectNoNagErrors(stack)`.
