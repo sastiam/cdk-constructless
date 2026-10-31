@@ -2,7 +2,7 @@
 
 ## 1. BillingAlarm
 
-- [ ] 1.1 Create `src/finops/billing-alarm.ts` exporting `interface BillingAlarmProps { readonly thresholdUsd: number; readonly topic: sns.ITopic; readonly alarmName?: string; readonly linkedAccountId?: string }`
+- [x] 1.1 Create `src/finops/billing-alarm.ts` exporting `interface BillingAlarmProps { readonly thresholdUsd: number; readonly topic: sns.ITopic; readonly alarmName?: string; readonly linkedAccountId?: string }`
   and `class BillingAlarm extends Construct` with `public readonly alarm: cloudwatch.Alarm` (id `'Alarm'`).
   Order: `assertRegion(this, 'us-east-1', 'BillingAlarm')`; `assertPositive(this, 'thresholdUsd', thresholdUsd)`; when `linkedAccountId` is resolved and does not match `/^\d{12}$/` throw
   `ConstructValidationError` with message: linkedAccountId must be a 12-digit account ID, got "<id>".
@@ -11,7 +11,7 @@
   TSDoc: billing alerts must be enabled first in Billing preferences and cannot be disabled; data takes about 15 minutes to appear; USD only; `LinkedAccount` exists only when the payer publishes per-account metrics
   (check with `aws cloudwatch list-metrics --namespace AWS/Billing --region us-east-1`). Export from `src/index.ts`.
   Verify: `bun run typecheck` `bun run lint`
-- [ ] 1.2 Create `test/finops/billing-alarm.test.ts` covering each scenario in this change's `specs/finops-alerts/spec.md` with the exact alarm properties, using an `AlertsTopic` for the topic;
+- [x] 1.2 Create `test/finops/billing-alarm.test.ts` covering each scenario in this change's `specs/finops-alerts/spec.md` with the exact alarm properties, using an `AlertsTopic` for the topic;
   `synth(..., { region: 'eu-west-1' })` throws the exact message; `envAgnostic` emits the warning; `thresholdUsd: 0` throws `thresholdUsd must be greater than 0, got 0`; linked account dimension and the invalid-ID message.
   Snapshot and `expectNoNagErrors(stack)`.
   Commit `feat(finops)`.
