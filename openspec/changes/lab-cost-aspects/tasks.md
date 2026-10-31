@@ -23,7 +23,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 Create `docs/constructs/LabCostAspects.md` from `docs/constructs/_template.md` (the coverage test only requires pages for exported construct classes; this page documents the aspects anyway),
+- [x] 2.1 Create `docs/constructs/LabCostAspects.md` from `docs/constructs/_template.md` (the coverage test only requires pages for exported construct classes; this page documents the aspects anyway),
   filling every mandatory section with the fixed-cost table (type and the price row it links). Append rows to `docs/aws-facts.md` (only add `LabCostAspects` to Used by when the fact exists):
   `| NAT Gateway costs 0.045 USD per hour plus 0.045 USD per GB processed (Ohio example) | https://aws.amazon.com/vpc/pricing/ | 2026-10-30 | LabCostAspects |`;
   `| Public IPv4 addresses cost 0.005 USD per hour, in use or idle | https://aws.amazon.com/vpc/pricing/ | 2026-10-30 | LabCostAspects |`;

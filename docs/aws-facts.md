@@ -18,3 +18,7 @@ Every AWS fact that a construct relies on (pricing, quotas, limits and service b
 | Billing metric data is stored in us-east-1, represents worldwide charges, is USD only; recommended statistic Maximum with a 6-hour period | https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html | 2026-10-31 | BillingAlarm, FinOpsGuardrail |
 | CloudWatch free tier includes 10 standard-resolution alarm metrics per month | https://aws.amazon.com/cloudwatch/pricing/ | 2026-10-31 | BillingAlarm, FinOpsGuardrail |
 | The first two action-enabled budgets per account are free each month; each additional one costs 0.10 USD per day | https://aws.amazon.com/aws-cost-management/aws-budgets/pricing/ | 2026-10-31 | BudgetDenyAction, BudgetStopInstancesAction, FinOpsGuardrail |
+| NAT Gateway costs 0.045 USD per hour plus 0.045 USD per GB processed (Ohio example) | https://aws.amazon.com/vpc/pricing/ | 2026-10-30 | LabCostAspects |
+| Public IPv4 addresses cost 0.005 USD per hour, in use or idle | https://aws.amazon.com/vpc/pricing/ | 2026-10-30 | LabCostAspects |
+| Application Load Balancer costs 0.0225 USD per hour plus 0.008 USD per LCU | https://aws.amazon.com/elasticloadbalancing/pricing/ | 2026-10-30 | LabCostAspects |
+| EKS costs 0.10 USD per cluster per hour | https://aws.amazon.com/eks/pricing/ | 2026-10-30 | LabCostAspects |
