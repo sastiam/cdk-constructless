@@ -19,7 +19,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - `LabCostAspects`, `LogRetentionAspect`, `S3LifecycleAspect`, `FixedCostWarningAspect`.
 - `CostAnomalyGuard` construct.
 - `BudgetScpAction` construct.
-- `LabStack` construct.
 
 ### Changed
 
