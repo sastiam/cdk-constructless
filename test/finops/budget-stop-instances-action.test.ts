@@ -3,9 +3,9 @@ import { Match, Template } from 'aws-cdk-lib/assertions';
 import type * as iam from 'aws-cdk-lib/aws-iam';
 import * as sns from 'aws-cdk-lib/aws-sns';
 import { describe, expect, it } from 'vitest';
+import { BudgetActionThresholdType } from '../../src/finops/budget-action-common';
 import { BudgetActionExecutionRole, StopInstancesTarget } from '../../src/finops/budget-action-execution-role';
 import {
-  BudgetActionThresholdType,
   BudgetStopInstancesAction,
   type BudgetStopInstancesActionProps,
 } from '../../src/finops/budget-stop-instances-action';

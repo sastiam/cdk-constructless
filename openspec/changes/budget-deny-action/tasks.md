@@ -2,7 +2,7 @@
 
 ## 1. Shared action types
 
-- [ ] 1.1 Create `src/finops/budget-action-common.ts` and move into it, unchanged, from `src/finops/budget-stop-instances-action.ts`: `BudgetActionThresholdType`, `BudgetActionApprovalModel`,
+- [x] 1.1 Create `src/finops/budget-action-common.ts` and move into it, unchanged, from `src/finops/budget-stop-instances-action.ts`: `BudgetActionThresholdType`, `BudgetActionApprovalModel`,
   `BudgetActionSubscriber`, plus two new exported functions extracted from that file's constructor: `validateActionThreshold(scope, threshold: number, type: BudgetActionThresholdType)` and
   `toActionSubscribers(scope, subscribers: BudgetActionSubscriber[]): budgets.CfnBudgetsAction.SubscriberProperty[]` (includes the 1-11 count check and the exactly-one-of check with the same messages).
   Make `budget-stop-instances-action.ts` import them; keep every export in `src/index.ts` so the public API does not change.

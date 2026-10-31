@@ -1,53 +1,17 @@
 import { Stack, Token } from 'aws-cdk-lib';
 import * as budgets from 'aws-cdk-lib/aws-budgets';
-import type * as sns from 'aws-cdk-lib/aws-sns';
 import { Construct } from 'constructs';
 import { ConstructValidationError } from '../core/errors';
-import { assertItemCount, assertPositive, assertRange } from '../core/validation';
+import { assertItemCount } from '../core/validation';
+import {
+  BudgetActionApprovalModel,
+  type BudgetActionSubscriber,
+  BudgetActionThresholdType,
+  toActionSubscribers,
+  validateActionThreshold,
+} from './budget-action-common';
 import { BudgetActionExecutionRole, StopInstancesTarget } from './budget-action-execution-role';
 import { BudgetNotificationType, type CostBudget } from './cost-budget';
-
-/**
- * How the action threshold is measured against the budget limit.
- */
-export enum BudgetActionThresholdType {
-  /** The threshold is a percentage of the budget limit, from 0.01 to 1000. */
-  PERCENTAGE = 'PERCENTAGE',
-  /** The threshold is an absolute amount in USD. Must be greater than 0. */
-  ABSOLUTE_VALUE = 'ABSOLUTE_VALUE',
-}
-
-/**
- * Whether AWS Budgets runs the action on its own or waits for a person to approve it.
- */
-export enum BudgetActionApprovalModel {
-  /** AWS Budgets runs the action as soon as the threshold is crossed. */
-  AUTOMATIC = 'AUTOMATIC',
-  /** AWS Budgets waits for an approval before it runs the action. */
-  MANUAL = 'MANUAL',
-}
-
-/**
- * A recipient of the Budget Action notifications.
- *
- * Exactly one of `email` or `topic` must be set.
- */
-export interface BudgetActionSubscriber {
-  /**
-   * The e-mail address that receives the notifications. Set this or `topic`, not both.
-   *
-   * @default none (exactly one of email or topic is required)
-   */
-  readonly email?: string;
-
-  /**
-   * The SNS topic that receives the notifications. The topic policy must allow AWS Budgets to publish.
-   * Set this or `email`, not both.
-   *
-   * @default none (exactly one of email or topic is required)
-   */
-  readonly topic?: sns.ITopic;
-}
 
 /**
  * Properties of the `BudgetStopInstancesAction` construct.
@@ -131,28 +95,6 @@ const SSM_SUBTYPE: Record<StopInstancesTarget, string> = {
 };
 
 /**
- * Converts a subscriber to its `AWS::Budgets::BudgetsAction` form, or throws when the subscriber does not set exactly one of `email` and `topic`.
- *
- * @param scope the construct that owns the subscriber
- * @param subscriber the subscriber to convert
- * @returns an `EMAIL` subscriber for `email`, or an `SNS` subscriber for `topic`
- * @throws {ConstructValidationError} `each subscriber needs exactly one of email or topic` when both or neither is set
- */
-function toSubscriberProperty(
-  scope: Construct,
-  subscriber: BudgetActionSubscriber,
-): budgets.CfnBudgetsAction.SubscriberProperty {
-  const { email, topic } = subscriber;
-  if (email !== undefined && topic === undefined) {
-    return { type: 'EMAIL', address: email };
-  }
-  if (topic !== undefined && email === undefined) {
-    return { type: 'SNS', address: topic.topicArn };
-  }
-  throw new ConstructValidationError(scope, 'each subscriber needs exactly one of email or topic');
-}
-
-/**
  * A Budget Action that stops the listed EC2 or RDS instances through an SSM automation document when a `CostBudget` threshold is crossed.
  *
  * The construct wraps `AWS::Budgets::BudgetsAction` with `ActionType` `RUN_SSM_DOCUMENTS` and subtype `STOP_EC2_INSTANCES` or
@@ -198,14 +140,8 @@ export class BudgetStopInstancesAction extends Construct {
     const approvalModel = props.approvalModel ?? BudgetActionApprovalModel.AUTOMATIC;
 
     assertItemCount(this, 'instanceIds', instanceIds, 1, 100);
-    assertItemCount(this, 'subscribers', subscribers, 1, 11);
-    const subscriberProperties = subscribers.map((subscriber) => toSubscriberProperty(this, subscriber));
-
-    if (thresholdType === BudgetActionThresholdType.PERCENTAGE) {
-      assertRange(this, 'threshold', threshold, 0.01, 1000);
-    } else {
-      assertPositive(this, 'threshold', threshold);
-    }
+    const subscriberProperties = toActionSubscribers(this, subscribers);
+    validateActionThreshold(this, threshold, thresholdType);
 
     const region = props.region ?? Stack.of(this).region;
     if (Token.isUnresolved(region)) {
