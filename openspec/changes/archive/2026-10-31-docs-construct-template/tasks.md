@@ -2,7 +2,7 @@
 
 ## 1. Templates
 
-- [ ] 1.1 Create `docs/constructs/_template.md` with a title line `# <ConstructName>` and exactly these `##` headings in this order, each followed by an
+- [x] 1.1 Create `docs/constructs/_template.md` with a title line `# <ConstructName>` and exactly these `##` headings in this order, each followed by an
   HTML comment explaining what to write: `## Purpose` (one paragraph: the problem it solves), `## Resources created` (table: CloudFormation type, count, notes),
   `## Props and defaults` (table: prop, type, default, description; copy from TSDoc), `## Cost impact` (fixed / variable / none, with USD numbers and links to rows in aws-facts),
   `## Verified AWS facts` (bullets linking to rows of `docs/aws-facts.md`), `## Limits and risks` (bullets, including cdk-nag suppressions and their reasons),
@@ -14,7 +14,7 @@
 
 ## 2. Coverage test
 
-- [ ] 2.1 Create `test/docs-coverage.test.ts`: import `* as lib from '../src'` and `Construct` from `constructs`; collect export names whose value is a function with
+- [x] 2.1 Create `test/docs-coverage.test.ts`: import `* as lib from '../src'` and `Construct` from `constructs`; collect export names whose value is a function with
   `value.prototype instanceof Construct`; for each, assert `fs.existsSync(path.join(__dirname, '../docs/constructs', name + '.md'))` with message `missing docs/constructs/<name>.md`
   and that the file contains each of the 8 headings from `_template.md` (message `docs/constructs/<name>.md is missing "<heading>"`). Export the heading list as
   `MANDATORY_HEADINGS` from `test/helpers/docs.ts` and import it. Add a test that `docs/aws-facts.md` rows (lines starting with `|` after the header separator) each have 4 cells,
