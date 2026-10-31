@@ -23,7 +23,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 In `README.md` `### HttpApiService` add a "Custom domain" example and note the Route 53 hosted zone monthly cost and that the default endpoint is disabled.
+- [ ] 2.1 Update `docs/constructs/HttpApiService.md`: add certificate, domain name, API mapping and records to Resources created, `HttpApiCustomDomain` to Props and defaults, a custom-domain example, and to Limits and risks that the default `execute-api` endpoint is disabled. Append these rows to `docs/aws-facts.md` (when a row with the same fact already exists, only add the construct to its Used by cell) and link them from the page's Verified AWS facts or Cost impact section: `| Route 53 hosted zones cost 0.50 USD per month for the first 25 zones | https://aws.amazon.com/route53/pricing/ | 2026-10-30 | HttpApiService |`.
   Add "`HttpApiService` custom domains." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
   Commit `docs(http-api)`.
-  Verify: `bun run lint` `bun run test`
+  Verify: `bun run test` `bun run lint`

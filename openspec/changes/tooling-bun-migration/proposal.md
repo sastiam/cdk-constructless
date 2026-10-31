@@ -9,9 +9,9 @@ verified. Node.js 20 reached end of life in April 2026, and the repository has n
 ## What Changes
 
 - Replace npm with Bun as package manager: `bun.lock` replaces `package-lock.json`; add `packageManager`.
-- Scripts: `build`, `typecheck`, `lint`, `format`, `test`, `test:integ` (placeholder). Remove `prepare`, add `prepublishOnly`.
+- Scripts: `build`, `typecheck`, `lint`, `format`, `test`, `test:integ` (placeholder); `prepare` keeps building `lib/` for `github:` installs.
 - **BREAKING**: `engines.node` becomes `>=22`.
-- Add Biome for lint/format; add `esbuild` and `cdk-nag` as dev dependencies; upgrade vitest to ^5 and `@types/node` to ^24.
+- Add Biome for lint/format; add `esbuild` and `cdk-nag` as dev dependencies. TypeScript ~7.0, vitest ^5 and the v7 checkout/setup-node actions are already on `main` (Dependabot #1-#3) and are kept.
 - CI uses `oven-sh/setup-bun` with a Node 22/24 matrix; Dependabot uses the `bun` ecosystem.
 - README, CONTRIBUTING and PR template use `bun` commands.
 
@@ -28,4 +28,4 @@ None.
 ## Impact
 
 `package.json`, `bun.lock`, `biome.json`, `.github/workflows/ci.yml`, `.github/dependabot.yml`, `README.md`,
-`CONTRIBUTING.md`, `.github/PULL_REQUEST_TEMPLATE.md`. Open Dependabot PRs #1-#3 become obsolete.
+`CONTRIBUTING.md`, `.github/PULL_REQUEST_TEMPLATE.md`.

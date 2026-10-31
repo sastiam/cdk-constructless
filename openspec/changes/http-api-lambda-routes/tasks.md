@@ -17,7 +17,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 In `README.md` `### HttpApiService` add a "Routes" example with `CostAwareFunction` and `HttpIamAuthorizer`, and note the public-route warning.
+- [ ] 2.1 Update `docs/constructs/HttpApiService.md`: add routes (route, integration, permission) to Resources created, `LambdaRouteOptions` to Props and defaults, a routes example with `CostAwareFunction` and `HttpIamAuthorizer`, and the public-route warning to Limits and risks. Link the existing `docs/aws-facts.md` rows this construct relies on, and add none.
   Add "`HttpApiService.addLambdaRoute()`." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
   Commit `docs(http-api)`.
-  Verify: `bun run lint` `bun run test`
+  Verify: `bun run test` `bun run lint`

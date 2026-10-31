@@ -26,7 +26,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 Add `### BudgetActionExecutionRole` under `## Constructs` in `README.md`: purpose, trust conditions, the permissions table per target,
-  the cdk-nag suppression and its reason, and an example. Add "`BudgetActionExecutionRole` construct." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
+- [ ] 2.1 Create `docs/constructs/BudgetActionExecutionRole.md` from `docs/constructs/_template.md`, filling every mandatory section from the TSDoc, the specs of this change and the tests. Resources: one `AWS::IAM::Role` and one `AWS::IAM::Policy`. Props and defaults: include a table of permissions per `StopInstancesTarget`. Limits and risks: the `AwsSolutions-IAM5` suppression and its reason; Start* actions are deliberately not granted; future SCP permissions (#71) extend this role. Append these rows to `docs/aws-facts.md` (when a row with the same fact already exists, only add the construct to its Used by cell) and link them from the page's Verified AWS facts or Cost impact section: `| Budget Actions execution role trust policy: budgets.amazonaws.com with aws:SourceAccount and aws:SourceArn arn:aws:budgets::<account>:budget/* | https://docs.aws.amazon.com/cost-management/latest/userguide/billing-example-policies.html | 2026-10-30 | BudgetActionExecutionRole |`; `| AWSBudgetsActions_RolePolicyForResourceAdministrationWithSSM grants EC2/RDS stop via ssm.amazonaws.com and ssm:StartAutomationExecution on AWS-Stop* documents (updated 2026-04-07) | https://docs.aws.amazon.com/cost-management/latest/userguide/billing-permissions-ref.html | 2026-10-30 | BudgetActionExecutionRole |`. In `README.md` `## Constructs` add the line `- [BudgetActionExecutionRole](docs/constructs/BudgetActionExecutionRole.md): IAM role AWS Budgets assumes to run Budget Actions.`
+  Add "`BudgetActionExecutionRole` construct." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
   Commit `docs(finops)`.
-  Verify: `bun run lint` `bun run test`
+  Verify: `bun run test` `bun run lint`

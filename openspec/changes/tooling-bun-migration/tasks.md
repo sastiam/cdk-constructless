@@ -5,9 +5,10 @@
 - [ ] 1.1 In `package.json`: set `"packageManager": "bun@1.4.4"`, `"engines": { "node": ">=22" }`; replace `scripts` with exactly:
   `"build": "tsc -p tsconfig.build.json"`, `"typecheck": "tsc --noEmit -p tsconfig.json"`, `"lint": "biome check ."`,
   `"format": "biome check --write ."`, `"test": "vitest run"`, `"test:integ": "echo 'integration tests arrive in E7' && exit 0"`,
-  `"prepublishOnly": "bun run build"` (remove `prepare`). devDependencies: add `@biomejs/biome` `^2.6.4`, `esbuild` `^0.28.2`,
-  `cdk-nag` `^3.0.2`; set `vitest` `^5.0.5` and `@types/node` `^24.0.0`; keep `aws-cdk-lib` `2.275.0`, `constructs` `10.8.1`,
-  `typescript` `~5.9.0`. Delete `package-lock.json` and run `bun install` to create `bun.lock`.
+  `"prepare": "tsc -p tsconfig.build.json"` (keeps `github:` installs working: consumers such as aws-foundation install from git and need `lib/` built without Bun).
+  devDependencies: add `@biomejs/biome` `^2.6.4`, `esbuild` `^0.28.2`, `cdk-nag` `^3.0.2`; keep the versions already on `main` for
+  `typescript` (`~7.0.2`), `vitest` (`^5.0.5`), `@types/node`, `aws-cdk-lib` (`2.275.0`) and `constructs` (`10.8.1`).
+  Delete `package-lock.json` and run `bun install` to create `bun.lock`.
   Verify: `bun install --frozen-lockfile`
 - [ ] 1.2 Create `tsconfig.build.json` that extends `./tsconfig.json` with `"compilerOptions": { "rootDir": "src", "outDir": "lib", "noEmit": false }` and `"include": ["src"]`.
   Change `tsconfig.json`: remove `rootDir`, add `"noEmit": true` and `"types": ["node"]`, set `"include": ["src", "test"]`.
@@ -20,8 +21,8 @@
 
 ## 2. CI and docs
 
-- [ ] 2.1 Rewrite `.github/workflows/ci.yml` job `test`: matrix `node-version: [22, 24]`; steps `actions/checkout@v4`,
-  `actions/setup-node@v4` (node-version from matrix, no cache), `oven-sh/setup-bun@v2` with `bun-version-file: package.json`,
+- [ ] 2.1 Rewrite `.github/workflows/ci.yml` job `test`: matrix `node-version: [22, 24]`; steps `actions/checkout@v7`,
+  `actions/setup-node@v7` (node-version from matrix, no cache), `oven-sh/setup-bun@v2` with `bun-version-file: package.json`,
   then `bun install --frozen-lockfile`, `bun run lint`, `bun run typecheck`, `bun run test`, `bun run build`.
   In `.github/dependabot.yml` change `package-ecosystem: npm` to `package-ecosystem: bun`.
   Verify: `bun run lint`
@@ -30,7 +31,3 @@
   "Requirements" lists Node.js >= 22 and Bun >= 1.4. Add under `[Unreleased]` in `CHANGELOG.md`: "### Changed - Switched to Bun; Node.js >= 22 required."
   Commit `ci`.
   Verify: `bun run lint` `bun run test`
-
-## Workflow follow-up
-
-- After merge, close Dependabot PRs #1, #2 and #3 as superseded.

@@ -19,7 +19,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 Add `### StaticSiteDeployment` under `## Constructs` in `README.md` (example with `Source.asset('./dist')`, invalidation cost note, cdk-nag note).
+- [ ] 2.1 Create `docs/constructs/StaticSiteDeployment.md` from `docs/constructs/_template.md`, filling every mandatory section from the TSDoc, the specs of this change and the tests. Limits and risks: the upstream `BucketDeployment` singleton Lambda produces cdk-nag findings that consumers suppress at stack level. Append these rows to `docs/aws-facts.md` (when a row with the same fact already exists, only add the construct to its Used by cell) and link them from the page's Verified AWS facts or Cost impact section: `| CloudFront invalidations are free for the first 1,000 paths per month, then 0.005 USD per path; /* counts as one path | https://aws.amazon.com/cloudfront/pricing/ | 2026-10-30 | StaticSiteDeployment |`. In `README.md` `## Constructs` add the line `- [StaticSiteDeployment](docs/constructs/StaticSiteDeployment.md): uploads site content and invalidates the CloudFront cache.`
   Add "`StaticSiteDeployment` construct." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
   Commit `docs(static-site)`.
-  Verify: `bun run lint` `bun run test`
+  Verify: `bun run test` `bun run lint`

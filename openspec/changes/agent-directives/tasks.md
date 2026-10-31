@@ -28,7 +28,7 @@
   `0001-bun-package-manager.md` (Bun because openspec-cascade executes only bun commands; vitest on Node for tests; pnpm rejected because jsii is out of scope),
   `0002-typescript-only.md` (no jsii: allows union types and generics, faster iteration; Construct Hub and multi-language packages deferred to the roadmap),
   `0003-floci-local-integration.md` (Floci MIT emulator on port 4566 instead of LocalStack, which requires an auth token since March 2026; unsupported CloudFormation types are stubbed, so integration tests must assert through service APIs),
-  `0004-publishing.md` (`@sastiam/cdk-constructless` on npmjs.com via trusted publishing with provenance, mirrored to GitHub Packages; release-please drives SemVer from Conventional Commits).
+  `0004-publishing.md` (`@sastiam/cdk-constructless` on npmjs.com via trusted publishing with provenance, mirrored to GitHub Packages, and the `npm pack` tarball attached to every GitHub Release with a build attestation so consumers can pin an exact version without a token; until the first release, consumers install from `github:sastiam/cdk-constructless`; release-please drives SemVer from Conventional Commits).
   Verify: `bun run lint`
 - [ ] 2.2 Add a "Stacked pull requests" section to `CONTRIBUTING.md`: one OpenSpec change = one branch = one PR; branch name `stack/e<N>/<NN>-<change>`;
   the first branch of an epic starts from `main`, each next branch starts from the previous one; with `gh stack` (github/gh-stack) enabled use

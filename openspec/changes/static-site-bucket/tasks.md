@@ -19,7 +19,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 Add `### StaticSiteBucket` under `## Constructs` in `README.md` (purpose, defaults, cdk-nag suppression, lab example with `DESTROY` + `autoDeleteObjects`).
+- [ ] 2.1 Create `docs/constructs/StaticSiteBucket.md` from `docs/constructs/_template.md`, filling every mandatory section from the TSDoc, the specs of this change and the tests. Limits and risks: the `AwsSolutions-S1` suppression and its reason; RETAIN by default, lab example with DESTROY and `autoDeleteObjects`. Link the existing `docs/aws-facts.md` rows this construct relies on, and add none. In `README.md` `## Constructs` add the line `- [StaticSiteBucket](docs/constructs/StaticSiteBucket.md): private S3 origin bucket for static sites.`
   Add "`StaticSiteBucket` construct." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
   Commit `docs(static-site)`.
-  Verify: `bun run lint` `bun run test`
+  Verify: `bun run test` `bun run lint`

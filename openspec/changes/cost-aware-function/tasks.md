@@ -24,7 +24,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 Add `### CostAwareFunction` under `## Constructs` in `README.md`: defaults table (prop, default, why), example, the cdk-nag suppression and reason.
+- [ ] 2.1 Create `docs/constructs/CostAwareFunction.md` from `docs/constructs/_template.md`, filling every mandatory section from the TSDoc, the specs of this change and the tests. Props and defaults: the defaults table (prop, default, why). Resources: `AWS::Lambda::Function`, `AWS::IAM::Role`, `AWS::Logs::LogGroup`. Limits and risks: the `AwsSolutions-IAM4` suppression and its reason; override `architecture` for native x86 modules. Append these rows to `docs/aws-facts.md` (when a row with the same fact already exists, only add the construct to its Used by cell) and link them from the page's Verified AWS facts or Cost impact section: `| Lambda Always Free: 1 M requests and 400,000 GB-seconds per month | https://aws.amazon.com/lambda/pricing/ | 2026-10-30 | CostAwareFunction |`; `| Lambda detects recursive loops across Lambda, SQS, S3, SNS and EventBridge after about 16 invocations and can stop them | https://docs.aws.amazon.com/lambda/latest/dg/invocation-recursion.html | 2026-10-30 | CostAwareFunction |`; `| NODEJS_18_X is a deprecated runtime; constants exist up to NODEJS_24_X | https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda.Runtime.html | 2026-10-30 | CostAwareFunction |`. In `README.md` `## Constructs` add the line `- [CostAwareFunction](docs/constructs/CostAwareFunction.md): Node.js Lambda function with cost-aware defaults.`
   Add "`CostAwareFunction` construct." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
   Commit `docs(lambda)`.
-  Verify: `bun run lint` `bun run test`
+  Verify: `bun run test` `bun run lint`

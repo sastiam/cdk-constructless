@@ -22,7 +22,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 Add `### StaticSiteDistribution` under `## Constructs` in `README.md` (defaults table, SPA mode, the cdk-nag suppressions and why WAF and geo restriction are opt-in,
-  Free Plan note: no Lambda@Edge). Add "`StaticSiteDistribution` construct." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
+- [ ] 2.1 Create `docs/constructs/StaticSiteDistribution.md` from `docs/constructs/_template.md`, filling every mandatory section from the TSDoc, the specs of this change and the tests. Limits and risks: the `AwsSolutions-CFR3` and `AwsSolutions-CFR4` suppressions and reasons; WAF and geo restriction are opt-in (WAF costs at least 5 USD per month); no Lambda@Edge. Append these rows to `docs/aws-facts.md` (when a row with the same fact already exists, only add the construct to its Used by cell) and link them from the page's Verified AWS facts or Cost impact section: `| CloudFront Always Free: 1 TB data transfer and 10 M requests per month | https://aws.amazon.com/cloudfront/pricing/ | 2026-10-30 | StaticSiteDistribution |`; `| Lambda@Edge is not supported on the AWS Free Plan | https://docs.aws.amazon.com/accounts/latest/reference/supported-services-sign-up-new.html | 2026-10-30 | StaticSiteDistribution |`. In `README.md` `## Constructs` add the line `- [StaticSiteDistribution](docs/constructs/StaticSiteDistribution.md): CloudFront distribution with Origin Access Control in front of a private bucket.`
+  Add "`StaticSiteDistribution` construct." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
   Commit `docs(static-site)`.
-  Verify: `bun run lint` `bun run test`
+  Verify: `bun run test` `bun run lint`
