@@ -13,7 +13,7 @@ Every AWS fact that a construct relies on (pricing, quotas, limits and service b
 | A reverted Budget Action is not evaluated again in the same period unless it is reset | https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-controls.html | 2026-10-30 | BudgetStopInstancesAction, BudgetDenyAction, FinOpsGuardrail |
 | Unconfirmed: whether Budget Actions are available on the AWS Free Plan | https://docs.aws.amazon.com/accounts/latest/reference/supported-services-sign-up-new.html | 2026-10-30 | BudgetStopInstancesAction, BudgetDenyAction, FinOpsGuardrail |
 | Budgets SNS topic policy: budgets.amazonaws.com SNS:Publish with aws:SourceAccount and aws:SourceArn arn:aws:budgets::<account>:*; topics must be in the same account | https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-sns-policy.html | 2026-10-31 | AlertsTopic, FinOpsGuardrail |
-| Cost Anomaly Detection publishes to SNS as costalerts.amazonaws.com | https://docs.aws.amazon.com/cost-management/latest/userguide/ad-SNS.html | 2026-10-31 | AlertsTopic |
+| Cost Anomaly Detection publishes to SNS as costalerts.amazonaws.com | https://docs.aws.amazon.com/cost-management/latest/userguide/ad-SNS.html | 2026-10-31 | AlertsTopic, CostAnomalyGuard |
 | A KMS customer managed key costs 1 USD per month | https://aws.amazon.com/kms/pricing/ | 2026-10-30 | AlertsTopic |
 | Billing metric data is stored in us-east-1, represents worldwide charges, is USD only; recommended statistic Maximum with a 6-hour period | https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/monitor_estimated_charges_with_cloudwatch.html | 2026-10-31 | BillingAlarm, FinOpsGuardrail |
 | CloudWatch free tier includes 10 standard-resolution alarm metrics per month | https://aws.amazon.com/cloudwatch/pricing/ | 2026-10-31 | BillingAlarm, FinOpsGuardrail |
@@ -22,3 +22,6 @@ Every AWS fact that a construct relies on (pricing, quotas, limits and service b
 | Public IPv4 addresses cost 0.005 USD per hour, in use or idle | https://aws.amazon.com/vpc/pricing/ | 2026-10-30 | LabCostAspects |
 | Application Load Balancer costs 0.0225 USD per hour plus 0.008 USD per LCU | https://aws.amazon.com/elasticloadbalancing/pricing/ | 2026-10-30 | LabCostAspects |
 | EKS costs 0.10 USD per cluster per hour | https://aws.amazon.com/eks/pricing/ | 2026-10-30 | LabCostAspects |
+| Anomaly subscriptions notify by e-mail for DAILY and WEEKLY and by SNS for IMMEDIATE; Threshold is deprecated in favour of ThresholdExpression and both cannot be set | https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-ce-anomalysubscription.html | 2026-10-31 | CostAnomalyGuard |
+| Up to 10 e-mail recipients or 1 SNS topic per anomaly subscription; up to 10 values (linked accounts or tags) per customer managed monitor | https://docs.aws.amazon.com/cost-management/latest/userguide/management-limits.html | 2026-10-31 | CostAnomalyGuard |
+| Unverified: the product and FAQ pages state no price for Cost Anomaly Detection beyond the default configuration having no cost | https://aws.amazon.com/aws-cost-management/aws-cost-anomaly-detection/faqs/ | 2026-10-31 | CostAnomalyGuard |

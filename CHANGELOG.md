@@ -17,6 +17,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - `BudgetDenyAction` construct.
 - `FinOpsGuardrail` construct.
 - `LabCostAspects`, `LogRetentionAspect`, `S3LifecycleAspect`, `FixedCostWarningAspect`.
+- `CostAnomalyGuard` construct.
 
 ### Changed
 

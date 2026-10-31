@@ -39,6 +39,7 @@ Each construct is documented in [`docs/constructs/`](docs/constructs/), with one
 - [BillingAlarm](docs/constructs/BillingAlarm.md): EstimatedCharges alarm in us-east-1 that notifies an SNS topic.
 - [FinOpsGuardrail](docs/constructs/FinOpsGuardrail.md): budget, alerts topic, billing alarm and optional Budget Actions in one construct.
 - [LabCostAspects](docs/constructs/LabCostAspects.md): aspects for log retention, S3 cleanup rules and fixed-cost warnings.
+- [CostAnomalyGuard](docs/constructs/CostAnomalyGuard.md): Cost Anomaly Detection monitor and subscription with a USD impact threshold.
 
 ## Development
 

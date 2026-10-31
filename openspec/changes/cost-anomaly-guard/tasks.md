@@ -22,7 +22,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 Create `docs/constructs/CostAnomalyGuard.md` from `docs/constructs/_template.md`, filling every mandatory section. Cost impact: the pages read state no price; record it as unverified.
+- [x] 2.1 Create `docs/constructs/CostAnomalyGuard.md` from `docs/constructs/_template.md`, filling every mandatory section. Cost impact: the pages read state no price; record it as unverified.
   Append these rows to `docs/aws-facts.md` (when a row with the same fact already exists, only add the construct to its Used by cell):
   `| Anomaly subscriptions notify by e-mail for DAILY and WEEKLY and by SNS for IMMEDIATE; Threshold is deprecated in favour of ThresholdExpression and both cannot be set | https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-ce-anomalysubscription.html | 2026-10-31 | CostAnomalyGuard |`;
   `| Up to 10 e-mail recipients or 1 SNS topic per anomaly subscription; up to 10 values (linked accounts or tags) per customer managed monitor | https://docs.aws.amazon.com/cost-management/latest/userguide/management-limits.html | 2026-10-31 | CostAnomalyGuard |`;
