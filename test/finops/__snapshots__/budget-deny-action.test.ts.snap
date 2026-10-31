@@ -1,0 +1,248 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`BudgetDenyAction > synthesized template > matches the snapshot and reports no cdk-nag errors 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "BudgetED13AE41": {
+      "Properties": {
+        "Budget": {
+          "BudgetLimit": {
+            "Amount": 5,
+            "Unit": "USD",
+          },
+          "BudgetName": "TestStackBudget623045C2",
+          "BudgetType": "COST",
+          "TimeUnit": "MONTHLY",
+        },
+        "NotificationsWithSubscribers": [
+          {
+            "Notification": {
+              "ComparisonOperator": "GREATER_THAN",
+              "NotificationType": "ACTUAL",
+              "Threshold": 60,
+              "ThresholdType": "PERCENTAGE",
+            },
+            "Subscribers": [
+              {
+                "Address": "alerts@example.com",
+                "SubscriptionType": "EMAIL",
+              },
+            ],
+          },
+          {
+            "Notification": {
+              "ComparisonOperator": "GREATER_THAN",
+              "NotificationType": "ACTUAL",
+              "Threshold": 80,
+              "ThresholdType": "PERCENTAGE",
+            },
+            "Subscribers": [
+              {
+                "Address": "alerts@example.com",
+                "SubscriptionType": "EMAIL",
+              },
+            ],
+          },
+          {
+            "Notification": {
+              "ComparisonOperator": "GREATER_THAN",
+              "NotificationType": "ACTUAL",
+              "Threshold": 100,
+              "ThresholdType": "PERCENTAGE",
+            },
+            "Subscribers": [
+              {
+                "Address": "alerts@example.com",
+                "SubscriptionType": "EMAIL",
+              },
+            ],
+          },
+          {
+            "Notification": {
+              "ComparisonOperator": "GREATER_THAN",
+              "NotificationType": "FORECASTED",
+              "Threshold": 100,
+              "ThresholdType": "PERCENTAGE",
+            },
+            "Subscribers": [
+              {
+                "Address": "alerts@example.com",
+                "SubscriptionType": "EMAIL",
+              },
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::Budgets::Budget",
+    },
+    "DenyComputeActionD4F01169": {
+      "DependsOn": [
+        "BudgetED13AE41",
+      ],
+      "Properties": {
+        "ActionThreshold": {
+          "Type": "PERCENTAGE",
+          "Value": 80,
+        },
+        "ActionType": "APPLY_IAM_POLICY",
+        "ApprovalModel": "AUTOMATIC",
+        "BudgetName": "TestStackBudget623045C2",
+        "Definition": {
+          "IamActionDefinition": {
+            "PolicyArn": {
+              "Ref": "DenyComputeDenyPolicy0BC653E1",
+            },
+            "Roles": [
+              "LabRole",
+            ],
+          },
+        },
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
+            "DenyComputeExecutionRole26D2F193",
+            "Arn",
+          ],
+        },
+        "NotificationType": "ACTUAL",
+        "Subscribers": [
+          {
+            "Address": "alerts@example.com",
+            "Type": "EMAIL",
+          },
+        ],
+      },
+      "Type": "AWS::Budgets::BudgetsAction",
+    },
+    "DenyComputeDenyPolicy0BC653E1": {
+      "Properties": {
+        "Description": "",
+        "Path": "/",
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "ec2:RunInstances",
+                "ec2:StartInstances",
+                "lambda:CreateFunction",
+                "ecs:CreateService",
+                "ecs:RunTask",
+                "rds:CreateDBInstance",
+                "rds:StartDBInstance",
+              ],
+              "Effect": "Deny",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::ManagedPolicy",
+    },
+    "DenyComputeExecutionRole26D2F193": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Condition": {
+                "ArnLike": {
+                  "aws:SourceArn": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":budgets::123456789012:budget/*",
+                      ],
+                    ],
+                  },
+                },
+                "StringEquals": {
+                  "aws:SourceAccount": "123456789012",
+                },
+              },
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "budgets.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "DenyComputeExecutionRoleDefaultPolicy1F02E98C": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "iam:AttachRolePolicy",
+                "iam:DetachRolePolicy",
+                "iam:AttachUserPolicy",
+                "iam:DetachUserPolicy",
+                "iam:AttachGroupPolicy",
+                "iam:DetachGroupPolicy",
+              ],
+              "Condition": {
+                "ArnEquals": {
+                  "iam:PolicyARN": {
+                    "Ref": "DenyComputeDenyPolicy0BC653E1",
+                  },
+                },
+              },
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "DenyComputeExecutionRoleDefaultPolicy1F02E98C",
+        "Roles": [
+          {
+            "Ref": "DenyComputeExecutionRole26D2F193",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
