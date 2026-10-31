@@ -2,7 +2,7 @@
 
 ## 1. Aspects
 
-- [ ] 1.1 Create `src/finops/lab-cost-aspects.ts` exporting:
+- [x] 1.1 Create `src/finops/lab-cost-aspects.ts` exporting:
   `const FIXED_COST_RESOURCE_TYPES: readonly string[]` = `AWS::EC2::NatGateway`, `AWS::EC2::EIP`, `AWS::ElasticLoadBalancingV2::LoadBalancer`, `AWS::ElasticLoadBalancing::LoadBalancer`, `AWS::EKS::Cluster`,
   `AWS::KMS::Key`, `AWS::SecretsManager::Secret`, `AWS::RDS::DBInstance`, `AWS::RDS::DBCluster`, `AWS::ElastiCache::CacheCluster`, `AWS::ElastiCache::ReplicationGroup`, `AWS::OpenSearchService::Domain`,
   `AWS::MSK::Cluster`, `AWS::Kinesis::Stream`, `AWS::GlobalAccelerator::Accelerator`, `AWS::EC2::TransitGateway`, `AWS::EC2::VPNConnection`, `AWS::NetworkFirewall::Firewall`, `AWS::Redshift::Cluster`;
@@ -15,7 +15,7 @@
   `class LabCostAspects` with `static applyTo(scope: IConstruct, options?: { logRetention?: logs.RetentionDays; abortIncompleteUploadDays?: number; noncurrentVersionDays?: number; fixedCostWarnings?: boolean /* true */ })`
   adding each aspect with `Aspects.of(scope).add(aspect, { priority: AspectPriority.MUTATING })`. Validate day options with `assertRange(.., 1, 3650)` (use the scope for errors). Export from `src/index.ts`.
   Verify: `bun run typecheck` `bun run lint`
-- [ ] 1.2 Create `test/finops/lab-cost-aspects.test.ts` covering each scenario in `specs/lab-cost-controls/spec.md` (use `synth(..., { nag: false })` because the fixtures deliberately contain a NAT gateway
+- [x] 1.2 Create `test/finops/lab-cost-aspects.test.ts` covering each scenario in `specs/lab-cost-controls/spec.md` (use `synth(..., { nag: false })` because the fixtures deliberately contain a NAT gateway
   and buckets without logs): exact `RetentionInDays`, warning texts via `Annotations.fromStack`, lifecycle rules with `Match.arrayWith`, an existing user rule kept, and a NAT gateway built with
   `new ec2.CfnNatGateway(stack, 'Nat', { subnetId: 'subnet-12345678', connectivityType: 'private' })`. Snapshot.
   Commit `feat(finops)`.
@@ -23,7 +23,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 Create `docs/constructs/LabCostAspects.md` from `docs/constructs/_template.md` (the coverage test only requires pages for exported construct classes; this page documents the aspects anyway),
+- [x] 2.1 Create `docs/constructs/LabCostAspects.md` from `docs/constructs/_template.md` (the coverage test only requires pages for exported construct classes; this page documents the aspects anyway),
   filling every mandatory section with the fixed-cost table (type and the price row it links). Append rows to `docs/aws-facts.md` (only add `LabCostAspects` to Used by when the fact exists):
   `| NAT Gateway costs 0.045 USD per hour plus 0.045 USD per GB processed (Ohio example) | https://aws.amazon.com/vpc/pricing/ | 2026-10-30 | LabCostAspects |`;
   `| Public IPv4 addresses cost 0.005 USD per hour, in use or idle | https://aws.amazon.com/vpc/pricing/ | 2026-10-30 | LabCostAspects |`;
