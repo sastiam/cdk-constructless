@@ -18,7 +18,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 Create `docs/constructs/LabStack.md` from `docs/constructs/_template.md`, filling every mandatory section (what destroy removes and what still bills: snapshots taken outside the stack,
+- [x] 2.1 Create `docs/constructs/LabStack.md` from `docs/constructs/_template.md`, filling every mandatory section (what destroy removes and what still bills: snapshots taken outside the stack,
   CloudWatch logs created by services outside the stack). Link the existing `docs/aws-facts.md` rows it relies on and add `LabStack` to their Used by cells.
   In `README.md` `## Constructs` add `- [LabStack](docs/constructs/LabStack.md): destroy-by-default stack with mandatory tags and lab cost aspects.`
   Add "`LabStack` construct." to `CHANGELOG.md` `[Unreleased]` → `### Added`.
