@@ -67,6 +67,29 @@ export function assertItemCount(
   }
 }
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/**
+ * Asserts that every entry of an e-mail list is a syntactically valid e-mail address.
+ *
+ * Each entry is checked separately. An entry that is an unresolved token is skipped, because its value is only known at deploy time.
+ *
+ * @param scope the construct that owns the prop
+ * @param name the prop name used in the error message
+ * @param emails the e-mail addresses to check
+ * @throws {ConstructValidationError} `${name} contains an invalid email "${value}"` for the first entry that does not match `/^[^\s@]+@[^\s@]+\.[^\s@]+$/`
+ */
+export function assertEmails(scope: IConstruct, name: string, emails: readonly string[]): void {
+  for (const email of emails) {
+    if (Token.isUnresolved(email)) {
+      continue;
+    }
+    if (!EMAIL_PATTERN.test(email)) {
+      throw new ConstructValidationError(scope, `${name} contains an invalid email "${email}"`);
+    }
+  }
+}
+
 /**
  * Asserts that the stack containing `scope` is deployed in the region a feature requires.
  *

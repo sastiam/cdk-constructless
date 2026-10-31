@@ -2,8 +2,28 @@ import { Token } from 'aws-cdk-lib';
 import { Annotations, Match } from 'aws-cdk-lib/assertions';
 import { Construct } from 'constructs';
 import { describe, expect, it } from 'vitest';
-import { assertItemCount, assertPositive, assertRange, assertRegion } from '../../src/core/validation';
+import { assertEmails, assertItemCount, assertPositive, assertRange, assertRegion } from '../../src/core/validation';
 import { synth } from '../helpers';
+
+describe('assertEmails', () => {
+  it('does not throw when every entry is a valid e-mail address', () => {
+    const probe = new Construct(
+      synth(() => {}),
+      'Probe',
+    );
+    expect(() => assertEmails(probe, 'emails', ['alerts@example.com', 'ops.team@example.co.uk'])).not.toThrow();
+  });
+
+  it('throws with the construct path for an entry without an @ sign', () => {
+    const probe = new Construct(
+      synth(() => {}),
+      'Probe',
+    );
+    expect(() => assertEmails(probe, 'emails', ['alerts.example.com'])).toThrow(
+      '[TestStack/Probe] emails contains an invalid email "alerts.example.com"',
+    );
+  });
+});
 
 describe('assertPositive', () => {
   it('does not throw for a value greater than 0', () => {
