@@ -2,7 +2,7 @@
 
 ## 1. Agent directives
 
-- [ ] 1.1 Create `AGENTS.md` with these sections and rules (bullets, verbatim intent):
+- [x] 1.1 Create `AGENTS.md` with these sections and rules (bullets, verbatim intent):
   "Construct design": props are `export interface <Name>Props` with only `readonly` members and TSDoc including `@default`;
   validate props in the constructor only when `!Token.isUnresolved(value)` using helpers from `src/core/validation.ts`;
   warnings use `Annotations.of(this).addWarningV2('<lib>:<rule>', message)`; never read `process.env` or call `fromLookup` inside a construct;
@@ -23,14 +23,14 @@
 
 ## 2. Architecture decision records
 
-- [ ] 2.1 Create `docs/adr/README.md` (index table: number, title, status) and four ADRs in Michael Nygard format
+- [x] 2.1 Create `docs/adr/README.md` (index table: number, title, status) and four ADRs in Michael Nygard format
   (Title, Status: Accepted, Context, Decision, Consequences), dated 2026-10-30:
   `0001-bun-package-manager.md` (Bun because openspec-cascade executes only bun commands; vitest on Node for tests; pnpm rejected because jsii is out of scope),
   `0002-typescript-only.md` (no jsii: allows union types and generics, faster iteration; Construct Hub and multi-language packages deferred to the roadmap),
   `0003-floci-local-integration.md` (Floci MIT emulator on port 4566 instead of LocalStack, which requires an auth token since March 2026; unsupported CloudFormation types are stubbed, so integration tests must assert through service APIs),
   `0004-publishing.md` (`@sastiam/cdk-constructless` on npmjs.com via trusted publishing with provenance, mirrored to GitHub Packages, and the `npm pack` tarball attached to every GitHub Release with a build attestation so consumers can pin an exact version without a token; until the first release, consumers install from `github:sastiam/cdk-constructless`; release-please drives SemVer from Conventional Commits).
   Verify: `bun run lint`
-- [ ] 2.2 Add a "Stacked pull requests" section to `CONTRIBUTING.md`: one OpenSpec change = one branch = one PR; branch name `stack/e<N>/<NN>-<change>`;
+- [x] 2.2 Add a "Stacked pull requests" section to `CONTRIBUTING.md`: one OpenSpec change = one branch = one PR; branch name `stack/e<N>/<NN>-<change>`;
   the first branch of an epic starts from `main`, each next branch starts from the previous one; with `gh stack` (github/gh-stack) enabled use
   `gh stack init` and `gh stack submit`; otherwise create each PR with `gh pr create --base <previous-branch>` and, after the base PR is squash-merged,
   run `git rebase --onto main <previous-branch> <branch>` then `gh pr edit <number> --base main`. Link `docs/adr/README.md` and `AGENTS.md`.
