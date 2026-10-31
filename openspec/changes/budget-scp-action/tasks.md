@@ -23,7 +23,7 @@
 
 ## 2. Documentation
 
-- [ ] 2.1 Create `docs/constructs/BudgetScpAction.md` from `docs/constructs/_template.md`, filling every mandatory section (management account only; reverting and "Reset" behavior; existing resources keep billing;
+- [x] 2.1 Create `docs/constructs/BudgetScpAction.md` from `docs/constructs/_template.md`, filling every mandatory section (management account only; reverting and "Reset" behavior; existing resources keep billing;
   SCPs do not affect the management account or service-linked roles). Update `docs/constructs/BudgetActionExecutionRole.md` with the organizations permissions.
   Link the Budget Actions rows in `docs/aws-facts.md` and add `BudgetScpAction` to their Used by cells; append
   `| Only a management account can apply SCPs through Budget Actions | https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-controls.html | 2026-10-30 | BudgetScpAction |` and
