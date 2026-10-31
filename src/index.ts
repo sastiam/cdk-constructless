@@ -7,3 +7,4 @@ export * from './finops/budget-deny-action';
 export * from './finops/budget-stop-instances-action';
 export * from './finops/cost-budget';
 export * from './finops/finops-guardrail';
+export * from './finops/lab-cost-aspects';
