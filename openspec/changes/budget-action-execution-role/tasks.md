@@ -2,7 +2,7 @@
 
 ## 1. Execution role
 
-- [ ] 1.1 Create `src/finops/budget-action-execution-role.ts` exporting `enum StopInstancesTarget { EC2 = 'EC2', RDS = 'RDS' }`,
+- [x] 1.1 Create `src/finops/budget-action-execution-role.ts` exporting `enum StopInstancesTarget { EC2 = 'EC2', RDS = 'RDS' }`,
   `interface BudgetActionExecutionRoleProps { readonly roleName?: string }` and `class BudgetActionExecutionRole extends Construct`
   with `public readonly role: iam.Role` (construct id `'Role'`) and method `allowStopInstances(target: StopInstancesTarget): void`.
   Trust: `new iam.ServicePrincipal('budgets.amazonaws.com').withConditions({ StringEquals: { 'aws:SourceAccount': stack.account },
@@ -16,7 +16,7 @@
   After the first call, `suppressNag(this.role.node.findChild('DefaultPolicy'), [{ id: 'AwsSolutions-IAM5[<finding>]', reason: 'Budget Actions stop instances through SSM automation documents; AWS documents these wildcard resources' }]) (cdk-nag 3 acknowledges multi-finding rules per finding: run the test once, read every `AwsSolutions-IAM5[...]` id the validation report prints for this construct and pass each one to `suppressNag` with this reason)`
   (`suppressNag` resolves the policy's `defaultChild`). Document the suppression in the class TSDoc. Export from `src/index.ts`.
   Verify: `bun run typecheck` `bun run lint`
-- [ ] 1.2 Create `test/finops/budget-action-execution-role.test.ts` covering every scenario in `specs/budget-actions/spec.md`:
+- [x] 1.2 Create `test/finops/budget-action-execution-role.test.ts` covering every scenario in `specs/budget-actions/spec.md`:
   assert `AssumeRolePolicyDocument` equals the exact trust statement (account `123456789012`, partition `aws` via `{ Ref: 'AWS::Partition' }`
   matched with `Match.anyValue()` only for the partition token); EC2 call → policy has the two exact statements; RDS call → RDS statements;
   calling `allowStopInstances(EC2)` twice yields one EC2 statement pair; `JSON.stringify(template)` contains neither `ec2:StartInstances` nor `rds:StartDBInstance`.
