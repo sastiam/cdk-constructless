@@ -32,7 +32,7 @@
 
 ## 3. Documentation
 
-- [ ] 3.1 Create `docs/constructs/BudgetDenyAction.md` from `docs/constructs/_template.md`, filling every mandatory section (deny is applied at the threshold and removed only by reverting the action;
+- [x] 3.1 Create `docs/constructs/BudgetDenyAction.md` from `docs/constructs/_template.md`, filling every mandatory section (deny is applied at the threshold and removed only by reverting the action;
   existing resources keep billing; pair with `BudgetStopInstancesAction`). Update `docs/constructs/BudgetActionExecutionRole.md` with the IAM attach permissions.
   Link the existing Budget Actions rows in `docs/aws-facts.md` and add `BudgetDenyAction` to their Used by cells; append
   `| The first two action-enabled budgets per account are free each month; each additional one costs 0.10 USD per day | https://aws.amazon.com/aws-cost-management/aws-budgets/pricing/ | 2026-10-31 | BudgetDenyAction, BudgetStopInstancesAction |`
