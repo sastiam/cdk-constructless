@@ -50,6 +50,25 @@ describe('assertEmails', () => {
       '[TestStack/Probe] emails contains an invalid email "alerts.example.com"',
     );
   });
+
+  it('rejects a domain with an empty label and addresses longer than 254 characters', () => {
+    const probe = new Construct(
+      synth(() => {}),
+      'Probe',
+    );
+    expect(() => assertEmails(probe, 'emails', ['alerts@example..com'])).toThrow('invalid email');
+    expect(() => assertEmails(probe, 'emails', [`${'a'.repeat(250)}@example.com`])).toThrow('invalid email');
+  });
+
+  it('rejects a pathological input quickly (no polynomial backtracking)', () => {
+    const probe = new Construct(
+      synth(() => {}),
+      'Probe',
+    );
+    const started = Date.now();
+    expect(() => assertEmails(probe, 'emails', [`!@!.${'!.'.repeat(50_000)}`])).toThrow('invalid email');
+    expect(Date.now() - started).toBeLessThan(100);
+  });
 });
 
 describe('assertPositive', () => {

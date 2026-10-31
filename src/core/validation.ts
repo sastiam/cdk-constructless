@@ -90,7 +90,9 @@ export function assertIamActions(scope: IConstruct, name: string, actions: reado
   }
 }
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Domain labels exclude '.', so each character has exactly one way to match (linear time, no ReDoS).
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/;
+const EMAIL_MAX_LENGTH = 254;
 
 /**
  * Asserts that every entry of an e-mail list is a syntactically valid e-mail address.
@@ -100,14 +102,15 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * @param scope the construct that owns the prop
  * @param name the prop name used in the error message
  * @param emails the e-mail addresses to check
- * @throws {ConstructValidationError} `${name} contains an invalid email "${value}"` for the first entry that does not match `/^[^\s@]+@[^\s@]+\.[^\s@]+$/`
+ * @throws {ConstructValidationError} `${name} contains an invalid email "${value}"` for the first entry longer than 254 characters
+ * or that does not match `/^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/`
  */
 export function assertEmails(scope: IConstruct, name: string, emails: readonly string[]): void {
   for (const email of emails) {
     if (Token.isUnresolved(email)) {
       continue;
     }
-    if (!EMAIL_PATTERN.test(email)) {
+    if (email.length > EMAIL_MAX_LENGTH || !EMAIL_PATTERN.test(email)) {
       throw new ConstructValidationError(scope, `${name} contains an invalid email "${email}"`);
     }
   }
