@@ -9,3 +9,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 ### Added
 
 - Initial repository scaffolding.
+
+### Changed
+
+- Switched to Bun; Node.js >= 22 required.

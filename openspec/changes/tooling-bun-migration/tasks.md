@@ -21,12 +21,12 @@
 
 ## 2. CI and docs
 
-- [ ] 2.1 Rewrite `.github/workflows/ci.yml` job `test`: matrix `node-version: [22, 24]`; steps `actions/checkout@v7`,
+- [x] 2.1 Rewrite `.github/workflows/ci.yml` job `test`: matrix `node-version: [22, 24]`; steps `actions/checkout@v7`,
   `actions/setup-node@v7` (node-version from matrix, no cache), `oven-sh/setup-bun@v2` with `bun-version-file: package.json`,
   then `bun install --frozen-lockfile`, `bun run lint`, `bun run typecheck`, `bun run test`, `bun run build`.
   In `.github/dependabot.yml` change `package-ecosystem: npm` to `package-ecosystem: bun`.
   Verify: `bun run lint`
-- [ ] 2.2 Replace every `npm ci`, `npm run typecheck`, `npm test` and `npm run build` in `README.md`, `CONTRIBUTING.md` and
+- [x] 2.2 Replace every `npm ci`, `npm run typecheck`, `npm test` and `npm run build` in `README.md`, `CONTRIBUTING.md` and
   `.github/PULL_REQUEST_TEMPLATE.md` with `bun install`, `bun run typecheck`, `bun run test`, `bun run build`; README
   "Requirements" lists Node.js >= 22 and Bun >= 1.4. Add under `[Unreleased]` in `CHANGELOG.md`: "### Changed - Switched to Bun; Node.js >= 22 required."
   Commit `ci`.
